@@ -7,5 +7,5 @@ import java.util.Collection;
 public interface GroupRepository extends JpaRepository<Group, Long> {
     Group findByName(String name);
 
-    Collection<Group> findAllByUserId(String name);
+    Collection<Group> findAllByUserId(String id);
 }
