@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 @Entity
 public class Event {
+    //@todo hpaup delete this class
     @Id
     @GeneratedValue
     private Long id;

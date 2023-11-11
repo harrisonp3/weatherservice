@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "user_group")
 public class Group {
+    //@todo hpaup delete this class
     @Id
     @GeneratedValue
     private Long id;

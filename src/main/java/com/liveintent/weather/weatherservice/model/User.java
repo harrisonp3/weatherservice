@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 public class User {
+    //@todo hpaup delete this class
     @Id
     private String id;
     private String name;

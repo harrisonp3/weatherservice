@@ -20,6 +20,7 @@ import java.util.Optional;
 @RequestMapping("/api")
 class GroupController {
 
+    //@todo hpaup delete this class
     private final Logger log = LoggerFactory.getLogger(GroupController.class);
     private GroupRepository groupRepository;
     private UserRepository userRepository;
