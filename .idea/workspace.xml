@@ -52,7 +52,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/harrisonpaup/Documents/workspace/weather-project/weatherservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -103,7 +103,7 @@
       <workItem from="1699720218815" duration="1234000" />
       <workItem from="1699721582385" duration="1801000" />
       <workItem from="1699723444381" duration="113000" />
-      <workItem from="1699723596508" duration="4828000" />
+      <workItem from="1699723596508" duration="4935000" />
     </task>
     <servers />
   </component>
