@@ -20,6 +20,16 @@ public class WeatherController {
     private WeatherService service;
 
 
+    @GetMapping("/hpaup/{dummy}")
+    public boolean dummyFrontendBackendConnectionMethod(@PathVariable String dummy) {
+        try {
+            System.out.println(dummy);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 
     @GetMapping("/forecast/{lat}/{lon}")
     public Forecast getForecastTest(@PathVariable double lat, @PathVariable double lon) {
