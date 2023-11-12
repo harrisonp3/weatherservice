@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/Initializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/Initializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +111,7 @@
       <workItem from="1699720218815" duration="1234000" />
       <workItem from="1699721582385" duration="1801000" />
       <workItem from="1699723444381" duration="113000" />
-      <workItem from="1699723596508" duration="17944000" />
+      <workItem from="1699723596508" duration="19657000" />
     </task>
     <servers />
   </component>

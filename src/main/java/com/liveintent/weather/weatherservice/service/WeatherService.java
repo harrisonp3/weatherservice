@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -32,10 +35,7 @@ public class WeatherService {
         HttpResponse<String> response = null;
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            JSONParser parser = new JSONParser();
-            JSONObject jason = (JSONObject) parser.parse(response.body());
-            System.out.println("hpaup here is the json object: ");
-            System.out.println(jason);
+            this.parseWeatherApiResponse(response);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,6 +45,25 @@ public class WeatherService {
             throw new RuntimeException(e);
         }
         System.out.println(response.body());
+    }
+
+    private void parseWeatherApiResponse(HttpResponse<String> response) throws ParseException {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject jason = (JSONObject) parser.parse(response.body());
+            System.out.println("hpaup here is the json object: ");
+            System.out.println(jason);
+            System.out.println("visibility is = " + jason.get("visibility")); //ok
+            System.out.println(jason.get("main"));// ok
+            System.out.println(jason.get("main.humidity"));// bad
+            System.out.println(jason.get("humidity"));//bad
+            System.out.println(jason.get("coord"));//ok
+            JSONObject coords = (JSONObject) jason.get("coord");
+            System.out.println("lat is : " + coords.get("lat"));//ok!
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
 
