@@ -37,7 +37,7 @@ const SearchBar = () => {
         setSearchInput(e.target.value);
         console.log(searchInput);
         console.log(e.target.value);
-        fetch(`/api/hpaup/${searchInput}`, {
+        fetch(`/api/forecast/city?city=${searchInput}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

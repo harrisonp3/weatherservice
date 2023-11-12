@@ -109,6 +109,36 @@ public class WeatherService {
         }
 
     }
+
+    public void findForecastByCity(String city, String apiKey) {
+        System.out.println("IN THE findForecastByCoordinates2() METHOD");
+        // Separated this out only for demonstration's sake - because 'q' isn't meaningful
+        // on its own, I wanted to remember what it stood for
+        String openWeatherApiParameterForCityInput = "q";
+        String requestUri =
+                "https://api.openweathermap.org/data/2.5/weather?" +
+                        openWeatherApiParameterForCityInput +
+                        "=" +
+                        city +
+                        "&appid=a4b02892fa24ceb05260687cde51496e";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestUri))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            this.parseWeatherApiResponse(response);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(response.body());
+    }
 }
 
 

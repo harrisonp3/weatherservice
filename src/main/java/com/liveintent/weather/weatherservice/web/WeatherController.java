@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +23,7 @@ public class WeatherController {
     private WeatherService service;
 
 
+    //@todo hpaup delete this function
     @GetMapping("/hpaup/{dummy}")
     public boolean dummyFrontendBackendConnectionMethod(@PathVariable String dummy) {
         try {
@@ -31,22 +35,42 @@ public class WeatherController {
         return false;
     }
 
-    @GetMapping("/forecast/{lat}/{lon}")
-    public Forecast getForecastTest(@PathVariable double lat, @PathVariable double lon) {
+    @GetMapping("/forecast/city")
+    public Forecast getForecastByCity(@RequestParam Map<String, String> multipleParams) {
+        System.out.println("hit getForecastByCity endpoint");
         try {
-            //@todo hpaup remove these explicit declarations
-            //lat=40.67;
-            //lon=73.98;
-            System.out.println(lat);
-            System.out.println(lon);
-            String apiKey = "a4b02892fa24ceb05260687cde51496e";
-            //return service.findForecastByCoordinates(lat, lon, apiKey);
-             service.findForecastByCoordinates2(lat, lon, apiKey);
-             return null;
+            String apiKey = "a4b02892fa24ceb05260687cde51496e";//@todo hpaup refactor
+            if (multipleParams.containsKey("city")) {
+                String city = multipleParams.get("city");
+                service.findForecastByCity(city, apiKey);
+                return null;
+            } else {
+                //@todo hpaup error that inputs invalid
+            }
         } catch(Exception e) {
             System.out.println(e.toString());
             return null;
         }
+        return null;
+    }
+    @GetMapping("/forecast/coords")
+    public Forecast getForecastByCoordinates(@RequestParam Map<String, Double> multipleParams) {
+        try {
+            if (multipleParams.containsKey("lat") && multipleParams.containsKey("lon")) {
+                double lat = multipleParams.get("lat");
+                double lon = multipleParams.get("lon");
+                String apiKey = "a4b02892fa24ceb05260687cde51496e"; //@todo hpaup refactor
+                //return service.findForecastByCoordinates(lat, lon, apiKey);
+                service.findForecastByCoordinates2(lat, lon, apiKey);
+                return null;
+            } else {
+                //@todo hpaup error that inputs invalid
+            }
+        } catch(Exception e) {
+            System.out.println(e.toString());
+            return null;
+        }
+        return null;
     }
 
     /**@GetMapping("/forecast/{city}")
