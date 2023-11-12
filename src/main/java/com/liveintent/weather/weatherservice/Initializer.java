@@ -21,7 +21,8 @@ public class Initializer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) {
-        Stream.of("Seattle JUG", "Denver JUG", "Dublin JUG").forEach(name -> repository.save(new Group(name)));
+        System.out.println("running mainline from Initializer.java class");
+        /**Stream.of("Seattle JUG", "Denver JUG", "Dublin JUG").forEach(name -> repository.save(new Group(name)));
         Group djug = repository.findByName("Seattle JUG");
         Event e = Event.builder().title("Micro Frontends for Java Developers")
                 .description("JHipster now has microtfrontend support!")
@@ -30,6 +31,6 @@ public class Initializer implements CommandLineRunner {
         djug.setEvents(Collections.singleton(e));
         repository.save(djug);
 
-        repository.findAll().forEach(System.out::println);
+        repository.findAll().forEach(System.out::println);*/
     }
 }
