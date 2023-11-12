@@ -7,8 +7,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Iterator;
-import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -49,7 +47,7 @@ public class WeatherService {
         System.out.println(response.body());
     }
 
-    private void parseWeatherApiResponse(HttpResponse<String> response) throws ParseException {
+    private Forecast parseWeatherApiResponse(HttpResponse<String> response) throws ParseException {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jason = (JSONObject) parser.parse(response.body());
@@ -104,13 +102,15 @@ public class WeatherService {
             fore.setWindSpeed(windSpeed);
             System.out.println("Here is the Forecast model: ");
             System.out.println(fore);
+            return fore;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
 
     }
 
-    public void findForecastByCity(String city, String apiKey) {
+    public Forecast findForecastByCity(String city, String apiKey) {
         System.out.println("IN THE findForecastByCoordinates2() METHOD");
         // Separated this out only for demonstration's sake - because 'q' isn't meaningful
         // on its own, I wanted to remember what it stood for
@@ -128,7 +128,8 @@ public class WeatherService {
         HttpResponse<String> response = null;
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            this.parseWeatherApiResponse(response);
+            Forecast fore = this.parseWeatherApiResponse(response);
+            return fore;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,6 +139,7 @@ public class WeatherService {
             throw new RuntimeException(e);
         }
         System.out.println(response.body());
+        return null;
     }
 }
 

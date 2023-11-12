@@ -37,29 +37,47 @@ const SearchBar = () => {
         setSearchInput(e.target.value);
         console.log(searchInput);
         console.log(e.target.value);
-        fetch(`/api/forecast/city?city=${searchInput}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then(r => console.log(r));
+        //fetch(`/api/forecast/city?city=${searchInput}`, {
+        //    method: 'GET',
+        //    headers: {
+        //        'Accept': 'application/json',
+        //        'Content-Type': 'application/json'
+        //    }
+        //}).then(r => console.log(r));
     };
 
-    if (searchInput.length > 0) {
-        console.log("in the block");
-        countries.filter((country) => {
-            console.log(country);
-            console.log("match is " + country.name.match(searchInput));
-            return country.name.match(searchInput);
-        });
-    }
+    const handleKeyUp = (e) => {
+        e.preventDefault();
+        console.log("in handleKeyUp");
+        console.log(e);
+        console.log(e.charCode);
+        if (e.keyCode === 13) {
+            console.log("attempting fetch");
+            fetch(`/api/forecast/city?city=${searchInput}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(r => console.log(r));
+        }
+    };
+
+    // if (searchInput.length > 0) {
+    //     console.log("in the block");
+    //     countries.filter((country) => {
+    //         console.log(country);
+    //         console.log("match is " + country.name.match(searchInput));
+    //         return country.name.match(searchInput);
+    //     });
+    // }
 
     return <div>
         <input
             type="search"
             placeholder="Search here"
             onChange={handleChange}
+            onKeyUp={handleKeyUp}
             value={searchInput} />
         <table>
             <tr>
