@@ -1,5 +1,6 @@
 package com.liveintent.weather.weatherservice.service;
 
+import com.liveintent.weather.weatherservice.model.Coordinates;
 import com.liveintent.weather.weatherservice.model.Forecast;
 import java.io.IOException;
 import java.net.URI;
@@ -9,6 +10,7 @@ import java.net.http.HttpResponse;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -58,8 +60,50 @@ public class WeatherService {
             System.out.println(jason.get("main.humidity"));// bad
             System.out.println(jason.get("humidity"));//bad
             System.out.println(jason.get("coord"));//ok
+
+
             JSONObject coords = (JSONObject) jason.get("coord");
             System.out.println("lat is : " + coords.get("lat"));//ok!
+            Coordinates coordinates = new Coordinates();
+            double lat = (double) coords.get("lat");
+            double lon = (double) coords.get("lon");
+            coordinates.setLatitude(lat);
+            coordinates.setLongitude(lon);
+
+            JSONObject mainBlock = (JSONObject) jason.get("main");
+            System.out.println("right before humidity");
+            long humidity = (long) mainBlock.get("humidity");
+            System.out.println("humidity is " + humidity);
+            double maxTemp = (double) mainBlock.get("temp_max");
+            System.out.println("maxTemp is " + maxTemp);
+            double minTemp = (double) mainBlock.get("temp_min");
+            System.out.println("minTemp is " + minTemp);
+
+            JSONArray weatherArrayBlock = (JSONArray) jason.get("weather");
+            System.out.println("is there somehow taht i need to index into the array?");
+            System.out.println(weatherArrayBlock);
+            System.out.println(weatherArrayBlock.get(0));
+            //System.out.println(weatherArrayBlock.get("icon"));
+            JSONObject weatherBlock = (JSONObject) weatherArrayBlock.get(0);
+            System.out.println(weatherBlock);
+            System.out.println("icon is = " + weatherBlock.get("icon"));
+            String icon = (String) weatherBlock.get("icon");
+            String desc = (String) weatherBlock.get("description");
+            System.out.println("got past array parse");
+
+            JSONObject windBlock = (JSONObject) jason.get("wind");
+            double windSpeed = (double) windBlock.get("speed");
+
+            Forecast fore = new Forecast();
+            fore.setHumidity(humidity);
+            fore.setCoord(coordinates);
+            fore.setIcon(icon);
+            fore.setMinTemp(minTemp);
+            fore.setMaxTemp(maxTemp);
+            fore.setDescription(desc);
+            fore.setWindSpeed(windSpeed);
+            System.out.println("Here is the Forecast model: ");
+            System.out.println(fore);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

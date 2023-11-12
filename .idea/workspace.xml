@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +114,7 @@
       <workItem from="1699720218815" duration="1234000" />
       <workItem from="1699721582385" duration="1801000" />
       <workItem from="1699723444381" duration="113000" />
-      <workItem from="1699723596508" duration="19657000" />
+      <workItem from="1699723596508" duration="21920000" />
     </task>
     <servers />
   </component>
@@ -133,6 +136,17 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/app" />
     </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
