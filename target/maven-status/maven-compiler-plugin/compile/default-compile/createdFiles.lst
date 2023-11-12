@@ -1,2 +1,5 @@
 com/liveintent/weather/weatherservice/web/GroupController.class
+com/liveintent/weather/weatherservice/model/Forecast.class
 com/liveintent/weather/weatherservice/model/UserRepository.class
+com/liveintent/weather/weatherservice/service/WeatherService.class
+com/liveintent/weather/weatherservice/web/WeatherController.class
