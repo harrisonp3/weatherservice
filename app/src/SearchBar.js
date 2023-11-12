@@ -35,8 +35,8 @@ const SearchBar = () => {
     const handleChange = (e) => {
         e.preventDefault();
         setSearchInput(e.target.value);
-        console.log(searchInput);
-        console.log(e.target.value);
+        //console.log(searchInput);
+        //console.log(e.target.value);
         //fetch(`/api/forecast/city?city=${searchInput}`, {
         //    method: 'GET',
         //    headers: {
@@ -48,18 +48,19 @@ const SearchBar = () => {
 
     const handleKeyUp = (e) => {
         e.preventDefault();
-        console.log("in handleKeyUp");
-        console.log(e);
-        console.log(e.charCode);
         if (e.keyCode === 13) {
-            console.log("attempting fetch");
-            fetch(`/api/forecast/city?city=${searchInput}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }).then(r => console.log(r));
+            console.log("attempting fetch 2.0");
+            fetch(`/api/forecast/city?city=${searchInput}`)
+                .then(response => {
+                    console.log(response.data);
+                    console.log(response);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    //handle error
+            });
         }
     };
 

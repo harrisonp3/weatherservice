@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class WeatherController {
     }
 
     @GetMapping("/forecast/city")
-    public String getForecastByCity(@RequestParam Map<String, String> multipleParams) {
+    public ResponseEntity<Forecast> getForecastByCity(@RequestParam Map<String, String> multipleParams) {
         System.out.println("hit getForecastByCity endpoint");
         try {
             String apiKey = "a4b02892fa24ceb05260687cde51496e";//@todo hpaup refactor
@@ -50,7 +51,10 @@ public class WeatherController {
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 //return new ResponseEntity<String>(mapper.writeValueAsString(fore), responseHeaders, HttpStatus.OK);
-                return fore.toString();
+                //System.out.println("hpaup TRYING RESPONSE ENTITY .body().toString()");
+                //return fore.toString();
+
+                return ResponseEntity.ok().body(fore); // this is sending a valid network response but still can't access in javascript code
             } else {
                 //@todo hpaup error that inputs invalid
             }
