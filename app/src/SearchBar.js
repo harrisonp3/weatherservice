@@ -3,6 +3,16 @@ import React, {useState} from 'react'
 
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState("");
+    const [forecasts, setForecasts] = useState([
+        {
+            description: "default dummy text - delete me",
+            humidity: 70
+        }, {
+            description: "alt dummy text - delete me",
+            humidity: 12
+        }
+    ]);
+    const [hpaup, setHpaup] = useState("TESTING123");
 
     const countries = [
 
@@ -35,15 +45,7 @@ const SearchBar = () => {
     const handleChange = (e) => {
         e.preventDefault();
         setSearchInput(e.target.value);
-        //console.log(searchInput);
-        //console.log(e.target.value);
-        //fetch(`/api/forecast/city?city=${searchInput}`, {
-        //    method: 'GET',
-        //    headers: {
-        //        'Accept': 'application/json',
-        //        'Content-Type': 'application/json'
-        //    }
-        //}).then(r => console.log(r));
+        console.log(forecasts);
     };
 
     const handleKeyUp = (e) => {
@@ -58,9 +60,10 @@ const SearchBar = () => {
                 })
                 .then(data => {
                     console.log(data);
+                    setForecasts([data]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
                 }).catch(error => {
                     //handle error
-            });
+                });
         }
     };
 
@@ -73,6 +76,7 @@ const SearchBar = () => {
     //     });
     // }
 
+
     return <div>
         <input
             type="search"
@@ -82,17 +86,29 @@ const SearchBar = () => {
             value={searchInput} />
         <table>
             <tr>
+                Dummy text - hpaup delete me... {hpaup}
+                {forecasts.map((forecast) => {
+                    return(
+                        <tr>
+                            <td>{forecast.description}</td>
+                            <td>{forecast.humidity}</td>
+                        </tr>
+                    )})}
+            </tr>
+            <tr>
                 <th>Country</th>
                 <th>Continent</th>
+                <th>{forecasts.humidity}</th>
             </tr>
             {countries.map((country, index) => {
-                <div>
-                    <tr>
-                        <td>{country.name}</td>
-                        <td>{country.continent}</td>
-                    </tr>
-                </div>
-            })}
+                return(
+                    <div>
+                        <tr>
+                            <td>{country.name}</td>
+                            <td>{country.continent}</td>
+                        </tr>
+                    </div>
+                )})}
         </table>
     </div>
 };
