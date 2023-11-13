@@ -110,7 +110,7 @@ public class WeatherService {
 
     }
 
-    public Forecast findForecastByCity(String city, String apiKey) {
+    public Forecast findForecastByCity(String city, String apiKey, String units) {
         System.out.println("IN THE findForecastByCoordinates2() METHOD");
         // Separated this out only for demonstration's sake - because 'q' isn't meaningful
         // on its own, I wanted to remember what it stood for
@@ -120,6 +120,8 @@ public class WeatherService {
                         openWeatherApiParameterForCityInput +
                         "=" +
                         city +
+                        "&units=" +
+                        units +
                         "&appid=a4b02892fa24ceb05260687cde51496e";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(requestUri))

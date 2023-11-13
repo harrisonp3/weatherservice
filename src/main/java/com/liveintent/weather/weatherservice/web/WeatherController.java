@@ -43,9 +43,13 @@ public class WeatherController {
         System.out.println("hit getForecastByCity endpoint");
         try {
             String apiKey = "a4b02892fa24ceb05260687cde51496e";//@todo hpaup refactor
+            String units = "imperial";
+            if (multipleParams.containsKey("units")) {
+                units = multipleParams.get("units");
+            }
             if (multipleParams.containsKey("city")) {
                 String city = multipleParams.get("city");
-                Forecast fore = service.findForecastByCity(city, apiKey);
+                Forecast fore = service.findForecastByCity(city, apiKey, units);
                 //return ResponseEntity.ok(fore).getBody();
                 HttpHeaders responseHeaders = new HttpHeaders();
                 ObjectMapper mapper = new ObjectMapper();

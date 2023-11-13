@@ -1,8 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
+import UnitSelector from "./UnitSelector";
 
 let nextId = 0;
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState("");
+    const [measurementUnit, setMeasurementUnit] = useState("imperial");
     const [forecasts, setForecasts] = useState([
         {
             id: nextId,
@@ -69,8 +71,9 @@ const SearchBar = () => {
     const handleKeyUp = (e) => {
         e.preventDefault();
         if (e.keyCode === 13) {
+            console.log(measurementUnit);
             console.log("attempting fetch 2.0");
-            fetch(`/api/forecast/city?city=${searchInput}`)
+            fetch(`/api/forecast/city?city=${searchInput}&units=${measurementUnit}`)
                 .then(response => {
                     console.log(response.data);
                     console.log(response);
@@ -119,6 +122,9 @@ const SearchBar = () => {
 
 
     return <div>
+        <UnitSelector
+            onSelectionChange={setMeasurementUnit}
+        />
         <input
             type="search"
             placeholder="Search here"
