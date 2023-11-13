@@ -7,41 +7,57 @@ const SearchBar = () => {
         {
             id: nextId,
             description: "default dummy text - delete me",
-            humidity: 70
+            humidity: 70,
+            minTemp: 45,
+            maxTemp: 54,
+            icon: "",
+            windSpeed: 56,
+            coordinates: {
+                latitude: -75.121,
+                longitude: -67.009
+            }
         }, {
             id: nextId++,
             description: "alt dummy text - delete me",
-            humidity: 12
+            humidity: 12,
+            minTemp: 45,
+            maxTemp: 54,
+            icon: "",
+            windSpeed: 56,
+            coordinates: {
+                latitude: -75.009,
+                longitude: -67.890
+            }
         }
     ]);
     const [hpaup, setHpaup] = useState("TESTING123");
 
     const countries = [
 
-        { name: "Belgium", continent: "Europe" },
-        { name: "India", continent: "Asia" },
-        { name: "Bolivia", continent: "South America" },
-        { name: "Ghana", continent: "Africa" },
-        { name: "Japan", continent: "Asia" },
-        { name: "Canada", continent: "North America" },
-        { name: "New Zealand", continent: "Australasia" },
-        { name: "Italy", continent: "Europe" },
-        { name: "South Africa", continent: "Africa" },
-        { name: "China", continent: "Asia" },
-        { name: "Paraguay", continent: "South America" },
-        { name: "Usa", continent: "North America" },
-        { name: "France", continent: "Europe" },
-        { name: "Botswana", continent: "Africa" },
-        { name: "Spain", continent: "Europe" },
-        { name: "Senegal", continent: "Africa" },
-        { name: "Brazil", continent: "South America" },
-        { name: "Denmark", continent: "Europe" },
-        { name: "Mexico", continent: "South America" },
-        { name: "Australia", continent: "Australasia" },
-        { name: "Tanzania", continent: "Africa" },
-        { name: "Bangladesh", continent: "Asia" },
-        { name: "Portugal", continent: "Europe" },
-        { name: "Pakistan", continent: "Asia" },
+        // { name: "Belgium", continent: "Europe" },
+        // { name: "India", continent: "Asia" },
+        // { name: "Bolivia", continent: "South America" },
+        // { name: "Ghana", continent: "Africa" },
+        // { name: "Japan", continent: "Asia" },
+        // { name: "Canada", continent: "North America" },
+        // { name: "New Zealand", continent: "Australasia" },
+        // { name: "Italy", continent: "Europe" },
+        // { name: "South Africa", continent: "Africa" },
+        // { name: "China", continent: "Asia" },
+        // { name: "Paraguay", continent: "South America" },
+        // { name: "Usa", continent: "North America" },
+        // { name: "France", continent: "Europe" },
+        // { name: "Botswana", continent: "Africa" },
+        // { name: "Spain", continent: "Europe" },
+        // { name: "Senegal", continent: "Africa" },
+        // { name: "Brazil", continent: "South America" },
+        // { name: "Denmark", continent: "Europe" },
+        // { name: "Mexico", continent: "South America" },
+        // { name: "Australia", continent: "Australasia" },
+        // { name: "Tanzania", continent: "Africa" },
+        // { name: "Bangladesh", continent: "Asia" },
+        // { name: "Portugal", continent: "Europe" },
+        // { name: "Pakistan", continent: "Asia" },
 
     ];
     const handleChange = (e) => {
@@ -63,8 +79,19 @@ const SearchBar = () => {
                 .then(data => {
                     console.log(data);
                     setForecasts([
-                        ...forecasts,
-                        { id: nextId++, humidity: data.humidity, description: data.description }
+                        ...forecasts, {
+                            id: nextId++,
+                            humidity: data.humidity,
+                            description: data.description,
+                            minTemp: data.minTemp,
+                            maxTemp: data.maxTemp,
+                            icon: data.icon,
+                            windSpeed: data.windSpeed,
+                            coordinates: {
+                                latitude: data.coord.latitude,
+                                longitude: data.coord.longitude
+                            }
+                    }
                     ]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
                 }).catch(error => {
                     //handle error
@@ -104,15 +131,20 @@ const SearchBar = () => {
                 {forecasts.map((forecast) => {
                     return(
                         <tr>
-                            <td>{forecast.description}</td>
-                            <td>{forecast.humidity}</td>
+                            <td>Description: {forecast.description}</td>
+                            <td>Humidity: {forecast.humidity}</td>
+                            <td>Windspeed: {forecast.windSpeed}</td>
+                            <td>Icon: {forecast.icon}</td>
+                            <td>Minimum temperature: {forecast.minTemp}</td>
+                            <td>Maximum temperature: {forecast.maxTemp}</td>
+                            <td>Latitude: {forecast.coordinates.latitude}</td>
+                            <td>Longitude: {forecast.coordinates.longitude}</td>
                         </tr>
                     )})}
             </tr>
             <tr>
                 <th>Country</th>
                 <th>Continent</th>
-                <th>{forecasts.humidity}</th>
             </tr>
             {countries.map((country, index) => {
                 return(
