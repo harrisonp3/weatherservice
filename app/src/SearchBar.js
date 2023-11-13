@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
 
-
+let nextId = 0;
 const SearchBar = () => {
     const [searchInput, setSearchInput] = useState("");
     const [forecasts, setForecasts] = useState([
         {
+            id: nextId,
             description: "default dummy text - delete me",
             humidity: 70
         }, {
+            id: nextId++,
             description: "alt dummy text - delete me",
             humidity: 12
         }
@@ -60,12 +62,24 @@ const SearchBar = () => {
                 })
                 .then(data => {
                     console.log(data);
-                    setForecasts([data]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
+                    setForecasts([
+                        ...forecasts,
+                        { id: nextId++, humidity: data.humidity, description: data.description }
+                    ]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
                 }).catch(error => {
                     //handle error
                 });
         }
     };
+
+    /**
+     * setArtists( // Replace the state
+     *   [ // with a new array
+     *     ...artists, // that contains all the old items
+     *     { id: nextId++, name: name } // and one new item at the end
+     *   ]
+     * );
+     */
 
     // if (searchInput.length > 0) {
     //     console.log("in the block");
