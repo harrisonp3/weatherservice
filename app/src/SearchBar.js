@@ -85,7 +85,7 @@ const SearchBar = () => {
                             description: data.description,
                             minTemp: data.minTemp,
                             maxTemp: data.maxTemp,
-                            icon: data.icon.substring(1),
+                            icon: data.icon.substring(1),// for some reason they get retuned from API with a "c"- prefix so I remove that here
                             windSpeed: data.windSpeed,
                             coordinates: {
                                 latitude: data.coord.latitude,
