@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-const options = ["imperial", "metric", "standard"];
+const options = ["I", "M", "S"];
 const UnitSelector = (props) => {
     const [selected, setSelected] = useState(options[0]);
 

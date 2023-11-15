@@ -73,7 +73,7 @@ const SearchBar = () => {
         if (e.keyCode === 13) {
             console.log(measurementUnit);
             console.log("attempting fetch 2.0");
-            fetch(`/api/forecast/city?city=${searchInput}&units=${measurementUnit}`)
+            fetch(`/api/forecast/hpaup?city=${searchInput}&units=${measurementUnit}`)
                 .then(response => {
                     console.log(response.data);
                     console.log(response);

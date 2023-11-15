@@ -1,7 +1,7 @@
 package com.liveintent.weather.weatherservice.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liveintent.weather.weatherservice.model.Forecast;
+import com.liveintent.weather.weatherservice.model.FullDayForecast;
 
 import com.liveintent.weather.weatherservice.service.WeatherService;
 import org.slf4j.Logger;
@@ -38,8 +38,35 @@ public class WeatherController {
         return false;
     }
 
+    //@todo hpaup rename endpooint
+    @GetMapping("/forecast/hpaup")
+    public ResponseEntity<FullDayForecast> getFiveDayForecastByCity(@RequestParam Map<String, String> multipleParams) {
+        System.out.println("hit getFiveDayForecastByCity endpoint");
+        try {
+            String apiKey = "361873f7ccfe4de08d96b649c583eb27";//@todo hpaup refactor
+            String units = "M";//@todo hpaup make sure M,S,I are the options in the frontend picklist for units
+            if (multipleParams.containsKey("units")) {
+                units = multipleParams.get("units");
+            }
+            if (multipleParams.containsKey("city")) {
+                String city = multipleParams.get("city");
+                FullDayForecast fore = service.findFiveDayForecastByCity(city, apiKey, units);
+                HttpHeaders responseHeaders = new HttpHeaders();
+                ObjectMapper mapper = new ObjectMapper();
+                System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
+                return ResponseEntity.ok().body(fore);
+            } else {
+                //@todo hpaup error that inputs invalid
+            }
+        } catch(Exception e) {
+            System.out.println(e.toString());
+            return null;
+        }
+        return null;
+    }
+
     @GetMapping("/forecast/city")
-    public ResponseEntity<Forecast> getForecastByCity(@RequestParam Map<String, String> multipleParams) {
+    public ResponseEntity<FullDayForecast> getForecastByCity(@RequestParam Map<String, String> multipleParams) {
         System.out.println("hit getForecastByCity endpoint");
         try {
             String apiKey = "a4b02892fa24ceb05260687cde51496e";//@todo hpaup refactor
@@ -49,7 +76,7 @@ public class WeatherController {
             }
             if (multipleParams.containsKey("city")) {
                 String city = multipleParams.get("city");
-                Forecast fore = service.findForecastByCity(city, apiKey, units);
+                FullDayForecast fore = service.findForecastByCity(city, apiKey, units);
                 //return ResponseEntity.ok(fore).getBody();
                 HttpHeaders responseHeaders = new HttpHeaders();
                 ObjectMapper mapper = new ObjectMapper();
@@ -69,7 +96,7 @@ public class WeatherController {
         return null;
     }
     @GetMapping("/forecast/coords")
-    public Forecast getForecastByCoordinates(@RequestParam Map<String, Double> multipleParams) {
+    public FullDayForecast getForecastByCoordinates(@RequestParam Map<String, Double> multipleParams) {
         //try {
         //    if (multipleParams.containsKey("lat") && multipleParams.containsKey("lon")) {
         //        double lat = multipleParams.get("lat");
