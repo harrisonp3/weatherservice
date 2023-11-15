@@ -55,25 +55,24 @@ public class WeatherService {
 
         //@todo hpaup consider just storing and returning these as strings and getting rid of all this
         Coordinates coordinates = new Coordinates();
-        String latString = (String) jason.get("lat");
-        double latDouble = Double.parseDouble(latString);
-        String lonString = (String) jason.get("lon");
-        double lonDouble = Double.parseDouble(lonString);
+
+        double latDouble = safelyExtractNumberValueAsDouble(jason, "lat");
+        double lonDouble = safelyExtractNumberValueAsDouble(jason, "lon");
         coordinates.setLatitude(latDouble);
         coordinates.setLongitude(lonDouble);
 
         JSONArray mainData = (JSONArray) jason.get("data");
         JSONObject today = (JSONObject) mainData.get(0);
         long humidity = (long) today.get("rh");//@todo hpaup should this be int? api returns int but my code has long so prob need to update
-        double maxTemp = this.safelyExtractTempValues(today, "max_temp");
-        double minTemp = this.safelyExtractTempValues(today, "min_temp");
-        double rightNowTemp = this.safelyExtractTempValues(today,"temp");
+        double maxTemp = this.safelyExtractNumberValueAsDouble(today, "max_temp");
+        double minTemp = this.safelyExtractNumberValueAsDouble(today, "min_temp");
+        double rightNowTemp = this.safelyExtractNumberValueAsDouble(today,"temp");
 
         JSONObject weatherBlock = (JSONObject) today.get("weather");
         String icon = (String) weatherBlock.get("icon");
         String desc = (String) weatherBlock.get("description");
 
-        double windSpeed = (double) today.get("wind_spd");
+        double windSpeed = this.safelyExtractNumberValueAsDouble(today, "wind_spd");
 
         Forecast[] fiveDayLookahead = new Forecast[5];
         Forecast tomorrow = this.parseIndividualForecast((JSONObject) mainData.get(1));
@@ -103,12 +102,12 @@ public class WeatherService {
         return fore;
     }
 
-    private double safelyExtractTempValues(JSONObject today, String key) {
+    private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
         //@todo hpaup add try catch exception handling
         double temp = 0;
-        Object tempRaw = today.get(key);
+        Object tempRaw = rawObject.get(key);
         if (tempRaw instanceof Double) {
-            temp = (double) today.get(key);
+            temp = (double) rawObject.get(key);
         } else if (tempRaw instanceof String) {
             temp = Double.parseDouble((String) tempRaw);
         } else if (tempRaw instanceof Long) {
@@ -121,8 +120,8 @@ public class WeatherService {
         JSONObject weatherBlock = (JSONObject) today.get("weather");
         String desc = (String) weatherBlock.get("description");
 
-        double maxTemp = this.safelyExtractTempValues(today, "max_temp");
-        double minTemp = this.safelyExtractTempValues(today, "min_temp");
+        double maxTemp = this.safelyExtractNumberValueAsDouble(today, "max_temp");
+        double minTemp = this.safelyExtractNumberValueAsDouble(today, "min_temp");
 
         Forecast forecast = new Forecast();
         forecast.setDescription(desc);
@@ -254,6 +253,40 @@ public class WeatherService {
         try {
             response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             FullDayForecast fore = this.parseWeatherApiResponse(response);
+            return fore;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(response.body());
+        return null;
+    }
+
+    public FullDayForecast findFiveDayForecastByCoords(String lat, String lon, String apiKey, String units) {
+        String openWeatherApiParameterForCityInput = "q";
+        String requestUri =
+                "https://api.weatherbit.io/v2.0/forecast/daily?" +
+                        "lat=" +
+                        lat +
+                        "&lon=" +
+                        lon +
+                        "&units=" +
+                        units +
+                        "&days=" +
+                        DAILY_RESULT_LIMIT +
+                        "&key=" + apiKey;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(requestUri))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = null;
+        try {
+            response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            FullDayForecast fore = this.parseWeatherbitForecast(response);
             return fore;
 
         } catch (IOException e) {

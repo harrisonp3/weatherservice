@@ -39,7 +39,16 @@ public class WeatherController {
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 return ResponseEntity.ok().body(fore);
-            } else {
+            } else if (multipleParams.containsKey("lat") && multipleParams.containsKey("lon")) {
+                String lat = multipleParams.get("lat");
+                String lon = multipleParams.get("lon");
+                FullDayForecast fore = service.findFiveDayForecastByCoords(lat, lon, apiKey, units);
+                HttpHeaders responseHeaders = new HttpHeaders();
+                ObjectMapper mapper = new ObjectMapper();
+                System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
+                return ResponseEntity.ok().body(fore);
+            }
+            else {
                 //@todo hpaup error that inputs invalid
             }
         } catch(Exception e) {

@@ -3,7 +3,9 @@ import UnitSelector from "./UnitSelector";
 
 let nextId = 0;
 const SearchBar = () => {
-    const [searchInput, setSearchInput] = useState("");
+    const [citySearchInput, setCitySearchInput] = useState("");
+    const [latSearchInput, setLatSearchInput] = useState("");
+    const [lonSearchInput, setLonSearchInput] = useState("");
     const [measurementUnit, setMeasurementUnit] = useState("imperial");
     const [forecasts, setForecasts] = useState([
         {
@@ -56,18 +58,35 @@ const SearchBar = () => {
                 ]
         }
     ]);
-    const handleChange = (e) => {
+    const handleCityChange = (e) => {
         e.preventDefault();
-        setSearchInput(e.target.value);
+        setCitySearchInput(e.target.value);
+        setLatSearchInput("");
+        setLonSearchInput("");
         console.log(forecasts);
     };
+
+    const handleLatitudeChange = (e) => {
+        e.preventDefault();
+        setLatSearchInput(e.target.value);
+        setCitySearchInput("");
+
+    };
+    const handleLongitudeChange = (e) => {
+        e.preventDefault();
+        setLonSearchInput(e.target.value);
+        setCitySearchInput("");
+    };
+
+
 
     const handleKeyUp = (e) => {
         e.preventDefault();
         if (e.keyCode === 13) {
+            let queryParams = citySearchInput ? `city=${citySearchInput}` : `lat=${latSearchInput}&lon=${lonSearchInput}`;
             console.log(measurementUnit);
             console.log("attempting fetch 2.0");
-            fetch(`/api/forecast/hpaup?city=${searchInput}&units=${measurementUnit}`)
+            fetch(`/api/forecast/hpaup?` + queryParams + `&units=${measurementUnit}`)
                 .then(response => {
                     console.log(response.data);
                     console.log(response);
@@ -106,10 +125,22 @@ const SearchBar = () => {
         />
         <input
             type="search"
-            placeholder="Search here"
-            onChange={handleChange}
+            placeholder="Search here by city"
+            onChange={handleCityChange}
             onKeyUp={handleKeyUp}
-            value={searchInput} />
+            value={citySearchInput} /> OR
+        <input
+            type="search"
+            placeholder="Latitude"
+            onChange={handleLatitudeChange}
+            onKeyUp={handleKeyUp}
+            value={latSearchInput} />
+        <input
+            type="search"
+            placeholder="Longitude"
+            onChange={handleLongitudeChange}
+            onKeyUp={handleKeyUp}
+            value={lonSearchInput} />
         <table>
             <tr>
                 Dummy text - hpaup delete me...
@@ -135,10 +166,6 @@ const SearchBar = () => {
                             })}
                         </tr>
                     )})}
-            </tr>
-            <tr>
-                <th>Country</th>
-                <th>Continent</th>
             </tr>
         </table>
     </div>
