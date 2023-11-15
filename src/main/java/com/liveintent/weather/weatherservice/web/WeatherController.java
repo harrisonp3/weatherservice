@@ -20,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class WeatherController {
-    private final Logger log = LoggerFactory.getLogger(GroupController.class);
+    private final Logger log = LoggerFactory.getLogger(WeatherController.class);
 
     @Autowired
     private WeatherService service;
@@ -116,19 +116,4 @@ public class WeatherController {
         System.out.println("hit endpoiont i've temporarily disabled");
         return null;
     }
-
-    /**@GetMapping("/forecast/{city}")
-    ResponseEntity<?> getForecast(@PathVariable String city) {
-        Optional<Forecast> forecast = forecastRepository.findByCity(city);
-        return forecast.map(response -> ResponseEntity.ok().body(response)).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }*/
-
-    /**
-     * @GetMapping("/group/{id}")
-     *     ResponseEntity<?> getGroup(@PathVariable Long id) {
-     *         Optional<Group> group = groupRepository.findById(id);
-     *         return group.map(response -> ResponseEntity.ok().body(response))
-     *                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-     *     }
-     */
 }

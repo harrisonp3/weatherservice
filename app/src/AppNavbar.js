@@ -13,10 +13,10 @@ const AppNavbar = () => {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="justify-content-end" style={{width: "100%"}} navbar>
                     <NavItem>
-                        <NavLink href="https://twitter.com/oktadev">@oktadev</NavLink>
+                        <NavLink href="https://twitter.com">twitter.com</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink href="https://github.com/oktadev/okta-spring-boot-react-crud-example">GitHub</NavLink>
+                        <NavLink href="https://www.google.com">google.com</NavLink>
                     </NavItem>
                 </Nav>
             </Collapse>

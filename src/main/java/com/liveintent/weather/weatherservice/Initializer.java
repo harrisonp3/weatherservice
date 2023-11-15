@@ -1,23 +1,10 @@
 package com.liveintent.weather.weatherservice;
 
-import com.liveintent.weather.weatherservice.model.Event;
-import com.liveintent.weather.weatherservice.model.Group;
-import com.liveintent.weather.weatherservice.model.GroupRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.util.Collections;
-import java.util.Date;
-import java.util.stream.Stream;
-
 @Component
 public class Initializer implements CommandLineRunner {
-    private final GroupRepository repository;
-
-    public Initializer(GroupRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public void run(String... strings) {

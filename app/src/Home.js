@@ -10,9 +10,6 @@ const Home = () => {
         <div>
             <AppNavbar/>
             <SearchBar/>
-            <Container fluid>
-                <Button color="link"><Link to="/groups">Manage JUG Tour</Link></Button>
-            </Container>
         </div>
     );
 }
