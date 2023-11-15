@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/Initializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/Weather.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/WeatherserviceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/WeatherserviceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/SearchBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +117,7 @@
       <workItem from="1699895467059" duration="3470000" />
       <workItem from="1700003511320" duration="2416000" />
       <workItem from="1700008594759" duration="6669000" />
-      <workItem from="1700058304586" duration="1222000" />
+      <workItem from="1700058304586" duration="2793000" />
     </task>
     <servers />
   </component>
@@ -151,8 +150,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
-          <line>106</line>
+          <line>119</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

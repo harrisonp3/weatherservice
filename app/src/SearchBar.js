@@ -12,7 +12,7 @@ const SearchBar = () => {
             humidity: 70,
             minTemp: 45,
             maxTemp: 54,
-            icon: "",
+            icon: "10n",
             windSpeed: 56,
             coordinates: {
                 latitude: -75.121,
@@ -36,7 +36,7 @@ const SearchBar = () => {
             humidity: 12,
             minTemp: 45,
             maxTemp: 54,
-            icon: "",
+            icon: "01n",
             windSpeed: 56,
             coordinates: {
                 latitude: -75.009,
@@ -85,7 +85,7 @@ const SearchBar = () => {
                             description: data.description,
                             minTemp: data.minTemp,
                             maxTemp: data.maxTemp,
-                            icon: data.icon,
+                            icon: data.icon.substring(1),
                             windSpeed: data.windSpeed,
                             coordinates: {
                                 latitude: data.coord.latitude,
@@ -119,7 +119,7 @@ const SearchBar = () => {
                             <td>Description: {forecast.description}</td>
                             <td>Humidity: {forecast.humidity}</td>
                             <td>Windspeed: {forecast.windSpeed}</td>
-                            <td>Icon: {forecast.icon}</td>
+                            <td>Icon: <img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
                             <td>Minimum temperature: {forecast.minTemp}</td>
                             <td>Maximum temperature: {forecast.maxTemp}</td>
                             <td>Latitude: {forecast.coordinates.latitude}</td>

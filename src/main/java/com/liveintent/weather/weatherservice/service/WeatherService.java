@@ -65,9 +65,9 @@ public class WeatherService {
         JSONArray mainData = (JSONArray) jason.get("data");
         JSONObject today = (JSONObject) mainData.get(0);
         long humidity = (long) today.get("rh");//@todo hpaup should this be int? api returns int but my code has long so prob need to update
-        double maxTemp = (double) today.get("max_temp");
-        double minTemp = (double) today.get("min_temp");
-        double rightNowTemp = (double) today.get("temp");
+        double maxTemp = this.safelyExtractTempValues(today, "max_temp");
+        double minTemp = this.safelyExtractTempValues(today, "min_temp");
+        double rightNowTemp = this.safelyExtractTempValues(today,"temp");
 
         JSONObject weatherBlock = (JSONObject) today.get("weather");
         String icon = (String) weatherBlock.get("icon");
@@ -103,32 +103,26 @@ public class WeatherService {
         return fore;
     }
 
+    private double safelyExtractTempValues(JSONObject today, String key) {
+        //@todo hpaup add try catch exception handling
+        double temp = 0;
+        Object tempRaw = today.get(key);
+        if (tempRaw instanceof Double) {
+            temp = (double) today.get(key);
+        } else if (tempRaw instanceof String) {
+            temp = Double.parseDouble((String) tempRaw);
+        } else if (tempRaw instanceof Long) {
+            temp = Double.parseDouble(Long.toString((Long) tempRaw));
+        }
+        return temp;
+    }
+
     private Forecast parseIndividualForecast(JSONObject today) {
         JSONObject weatherBlock = (JSONObject) today.get("weather");
         String desc = (String) weatherBlock.get("description");
 
-        double maxTemp = 0;
-        Object maxTempRaw = today.get("max_temp");
-        if (maxTempRaw instanceof Double) {
-            maxTemp = (double) today.get("max_temp");
-        } else if (maxTempRaw instanceof String) {
-            maxTemp = Double.parseDouble((String) maxTempRaw);
-        } else if (maxTempRaw instanceof Long) {
-            maxTemp = Double.parseDouble(Long.toString((Long) maxTempRaw));
-        }
-
-
-        double minTemp = 0;
-        Object minTempRaw = today.get("min_temp");
-        if (minTempRaw instanceof Double) {
-            minTemp = (double) today.get("min_temp");
-        } else if (minTempRaw instanceof String) {
-            minTemp = Double.parseDouble((String) minTempRaw);
-        } else if (minTempRaw instanceof Long) {
-            minTemp = Double.parseDouble(Long.toString((Long) minTempRaw));
-        }
-
-
+        double maxTemp = this.safelyExtractTempValues(today, "max_temp");
+        double minTemp = this.safelyExtractTempValues(today, "min_temp");
 
         Forecast forecast = new Forecast();
         forecast.setDescription(desc);
