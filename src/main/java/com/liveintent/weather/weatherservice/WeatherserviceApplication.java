@@ -11,6 +11,7 @@ public class WeatherserviceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherserviceApplication.class, args);
+		System.out.println("running mainline from WeatherserviceApplication class");
 		//@todo hpaup delete below this
 		//Weather app = new Weather();
 		//app.demo();
