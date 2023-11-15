@@ -17,7 +17,19 @@ const SearchBar = () => {
             coordinates: {
                 latitude: -75.121,
                 longitude: -67.009
-            }
+            },
+            fiveDayForecast: [
+                {
+                    "minTemp": 65.8,
+                    "maxTemp": 72.0,
+                    "description": "Overcast clouds"
+                },
+                {
+                    "minTemp": 65.7,
+                    "maxTemp": 72.7,
+                    "description": "Overcast clouds"
+                }
+            ]
         }, {
             id: nextId++,
             description: "alt dummy text - delete me",
@@ -29,7 +41,19 @@ const SearchBar = () => {
             coordinates: {
                 latitude: -75.009,
                 longitude: -67.890
-            }
+            },
+            fiveDayForecast: [
+                {
+                    minTemp: 65.8,
+                    maxTemp: 72.0,
+                    description: "Overcast clouds"
+                },
+                {
+                    minTemp: 65.7,
+                    maxTemp: 72.7,
+                    description: "Overcast clouds"
+                }
+                ]
         }
     ]);
     const [hpaup, setHpaup] = useState("TESTING123");
@@ -82,7 +106,10 @@ const SearchBar = () => {
                 .then(data => {
                     console.log(data);
                     setForecasts([
-                        ...forecasts, {
+                        // Un-comment the spread operator to make the results additive - so each time
+                        // you look one up it appends to the view instead of replaces last results
+                        //...forecasts,
+                        {
                             id: nextId++,
                             humidity: data.humidity,
                             description: data.description,
@@ -93,7 +120,8 @@ const SearchBar = () => {
                             coordinates: {
                                 latitude: data.coord.latitude,
                                 longitude: data.coord.longitude
-                            }
+                            },
+                            fiveDayForecast: data.fiveDayForecast
                     }
                     ]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
                 }).catch(error => {
@@ -145,6 +173,15 @@ const SearchBar = () => {
                             <td>Maximum temperature: {forecast.maxTemp}</td>
                             <td>Latitude: {forecast.coordinates.latitude}</td>
                             <td>Longitude: {forecast.coordinates.longitude}</td>
+                            {forecast.fiveDayForecast.map((miniForecast) => {
+                                return (
+                                    <tr>
+                                        <td>MINI MIN TEMP:{miniForecast.minTemp}</td>
+                                        <td>MINI MAX TEMP:{miniForecast.maxTemp}</td>
+                                        <td>MINI DESCRIPTION:{miniForecast.description}</td>
+                                    </tr>
+                                )
+                            })}
                         </tr>
                     )})}
             </tr>

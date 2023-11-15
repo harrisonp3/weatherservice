@@ -6,6 +6,7 @@
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/Initializer.java
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/model/UserRepository.java
+/Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/model/FullDayForecast.java
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/model/GroupRepository.java
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/web/WeatherController.java
 /Users/harrisonpaup/Documents/workspace/weather-project/weatherservice/src/main/java/com/liveintent/weather/weatherservice/WeatherserviceApplication.java
