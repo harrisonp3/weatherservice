@@ -31,57 +31,65 @@ public class WeatherService {
 
 
     private FullDayForecast parseWeatherbitForecast(HttpResponse<String> response) throws ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject rawForecastResponseObject = (JSONObject) parser.parse(response.body());
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject rawForecastResponseObject = (JSONObject) parser.parse(response.body());
 
-        //@todo hpaup consider just storing and returning these as strings and getting rid of all this
-        Coordinates coordinates = new Coordinates();
+            //@todo hpaup consider just storing and returning these as strings and getting rid of all this
+            Coordinates coordinates = new Coordinates();
 
-        double latDouble = safelyExtractNumberValueAsDouble(rawForecastResponseObject, "lat");
-        double lonDouble = safelyExtractNumberValueAsDouble(rawForecastResponseObject, "lon");
-        coordinates.setLatitude(latDouble);
-        coordinates.setLongitude(lonDouble);
+            double latDouble = safelyExtractNumberValueAsDouble(rawForecastResponseObject, "lat");
+            double lonDouble = safelyExtractNumberValueAsDouble(rawForecastResponseObject, "lon");
+            coordinates.setLatitude(latDouble);
+            coordinates.setLongitude(lonDouble);
 
-        JSONArray mainData = (JSONArray) rawForecastResponseObject.get("data");
-        JSONObject today = (JSONObject) mainData.get(0);
-        //@todo hpaup create a safelyExtractNumbmerValueAsLong function
-        long humidity = (long) today.get("rh");//@todo hpaup should this be int? api returns int but my code has long so prob need to update
-        double maxTemp = this.safelyExtractNumberValueAsDouble(today, "max_temp");
-        double minTemp = this.safelyExtractNumberValueAsDouble(today, "min_temp");
-        double rightNowTemp = this.safelyExtractNumberValueAsDouble(today,"temp");
+            JSONArray mainData = (JSONArray) rawForecastResponseObject.get("data");
+            JSONObject today = (JSONObject) mainData.get(0);
+            //@todo hpaup create a safelyExtractNumbmerValueAsLong function
+            long humidity = (long) today.get("rh");//@todo hpaup should this be int? api returns int but my code has long so prob need to update
+            double maxTemp = this.safelyExtractNumberValueAsDouble(today, "max_temp");
+            double minTemp = this.safelyExtractNumberValueAsDouble(today, "min_temp");
+            double rightNowTemp = this.safelyExtractNumberValueAsDouble(today,"temp");
 
-        JSONObject weatherBlock = (JSONObject) today.get("weather");
-        String icon = (String) weatherBlock.get("icon");
-        String desc = (String) weatherBlock.get("description");
+            JSONObject weatherBlock = (JSONObject) today.get("weather");
+            String icon = (String) weatherBlock.get("icon");
+            String desc = (String) weatherBlock.get("description");
 
-        double windSpeed = this.safelyExtractNumberValueAsDouble(today, "wind_spd");
+            double windSpeed = this.safelyExtractNumberValueAsDouble(today, "wind_spd");
 
-        Forecast[] fiveDayLookahead = new Forecast[5];
-        Forecast tomorrow = this.parseIndividualForecast((JSONObject) mainData.get(1));
-        Forecast twoDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(2));
-        Forecast threeDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(3));
-        Forecast fourDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(4));
-        Forecast fiveDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(5));
+            Forecast[] fiveDayLookahead = new Forecast[5];
+            Forecast tomorrow = this.parseIndividualForecast((JSONObject) mainData.get(1));
+            Forecast twoDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(2));
+            Forecast threeDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(3));
+            Forecast fourDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(4));
+            Forecast fiveDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(5));
 
-        fiveDayLookahead[0] = tomorrow;
-        fiveDayLookahead[1] = twoDaysFromNow;
-        fiveDayLookahead[2] = threeDaysFromNow;
-        fiveDayLookahead[3] = fourDaysFromNow;
-        fiveDayLookahead[4] = fiveDaysFromNow;
+            fiveDayLookahead[0] = tomorrow;
+            fiveDayLookahead[1] = twoDaysFromNow;
+            fiveDayLookahead[2] = threeDaysFromNow;
+            fiveDayLookahead[3] = fourDaysFromNow;
+            fiveDayLookahead[4] = fiveDaysFromNow;
 
-        FullDayForecast fore = new FullDayForecast();
-        fore.setFiveDayForecast(fiveDayLookahead);
-        fore.setHumidity(humidity);
-        fore.setCoord(coordinates);
-        fore.setIcon(icon);
-        fore.setMinTemp(minTemp);
-        fore.setMaxTemp(maxTemp);
-        fore.setTemp(rightNowTemp);
-        fore.setDescription(desc);
-        fore.setWindSpeed(windSpeed);
-        System.out.println("Here is the Forecast model: ");
-        System.out.println(fore);
-        return fore;
+            FullDayForecast fore = new FullDayForecast();
+            fore.setFiveDayForecast(fiveDayLookahead);
+            fore.setHumidity(humidity);
+            fore.setCoord(coordinates);
+            fore.setIcon(icon);
+            fore.setMinTemp(minTemp);
+            fore.setMaxTemp(maxTemp);
+            fore.setTemp(rightNowTemp);
+            fore.setDescription(desc);
+            fore.setWindSpeed(windSpeed);
+            System.out.println("Here is the Forecast model: ");
+            System.out.println(fore);
+            return fore;
+        }
+        catch (Exception e) {
+            //@todo hpaup handle error
+            System.out.println(e.getMessage());
+        }
+
+        return null;
     }
 
     private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
