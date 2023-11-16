@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
+    // 6 because we get today, and then 5 days after that for forecast lookahead
     private static final int DAILY_RESULT_LIMIT = 6;
     @Autowired
     private RestTemplate template = new RestTemplate();
@@ -122,8 +123,9 @@ public class WeatherService {
                         "&days=" +
                         DAILY_RESULT_LIMIT +
                         "&key=" + apiKey;
+        String spaceReplacedUri = this.replaceSpaces(requestUri);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(requestUri))
+                .uri(URI.create(spaceReplacedUri))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = null;
@@ -141,6 +143,16 @@ public class WeatherService {
         }
         System.out.println(response.body());
         return null;
+    }
+
+    private String replaceSpaces(String raw) {
+        try {
+            return raw.replaceAll("\\x20", "%20");
+        } catch (Exception e) {
+            //@todo hpaup handle error
+            return "";
+        }
+
     }
 
     //@todo hpaup rename this and other functions to be fetch i think, instead of find
