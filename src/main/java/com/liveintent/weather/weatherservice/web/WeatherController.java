@@ -34,7 +34,6 @@ public class WeatherController {
             if (multipleParams.containsKey("city")) {
                 String city = multipleParams.get("city");
                 FullDayForecast fore = service.findFiveDayForecastByCity(city, apiKey, units);
-                HttpHeaders responseHeaders = new HttpHeaders();
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 return ResponseEntity.ok().body(fore);
@@ -42,7 +41,6 @@ public class WeatherController {
                 String lat = multipleParams.get("lat");
                 String lon = multipleParams.get("lon");
                 FullDayForecast fore = service.findFiveDayForecastByCoords(lat, lon, apiKey, units);
-                HttpHeaders responseHeaders = new HttpHeaders();
                 ObjectMapper mapper = new ObjectMapper();
                 System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 return ResponseEntity.ok().body(fore);

@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/GroupList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/SearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/WeatherserviceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/WeatherserviceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/web/WeatherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/web/WeatherController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +137,7 @@
       <workItem from="1700058304586" duration="2952000" />
       <workItem from="1700061564205" duration="64000" />
       <workItem from="1700069693551" duration="3166000" />
-      <workItem from="1700145815281" duration="855000" />
+      <workItem from="1700145815281" duration="1259000" />
     </task>
     <servers />
   </component>
