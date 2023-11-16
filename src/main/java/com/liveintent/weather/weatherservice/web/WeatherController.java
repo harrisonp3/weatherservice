@@ -22,8 +22,7 @@ public class WeatherController {
     @Autowired
     private WeatherService service;
 
-    //@todo hpaup rename endpooint
-    @GetMapping("/forecast/hpaup")
+    @GetMapping("/forecast")
     public ResponseEntity<FullDayForecast> getFiveDayForecastByCity(@RequestParam Map<String, String> multipleParams) {
         System.out.println("hit getFiveDayForecastByCity endpoint");
         try {
@@ -55,10 +54,6 @@ public class WeatherController {
             System.out.println(e.toString());
             return null;
         }
-        return null;
-    }
-    @GetMapping("/forecast/coords")
-    public FullDayForecast getForecastByCoordinates(@RequestParam Map<String, Double> multipleParams) {
         return null;
     }
 }

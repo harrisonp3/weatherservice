@@ -86,7 +86,7 @@ const SearchBar = () => {
             let queryParams = citySearchInput ? `city=${citySearchInput}` : `lat=${latSearchInput}&lon=${lonSearchInput}`;
             console.log(measurementUnit);
             console.log("attempting fetch 2.0");
-            fetch(`/api/forecast/hpaup?` + queryParams + `&units=${measurementUnit}`)
+            fetch(`/api/forecast?` + queryParams + `&units=${measurementUnit}`)
                 .then(response => {
                     console.log(response.data);
                     console.log(response);

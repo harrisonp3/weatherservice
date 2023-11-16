@@ -11,12 +11,9 @@ public class WeatherserviceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WeatherserviceApplication.class, args);
-		System.out.println("running mainline from WeatherserviceApplication class");
-		//@todo hpaup delete below this
-		//Weather app = new Weather();
-		//app.demo();
 	}
 
+	//@todo hpaup remove this?
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder.build();
