@@ -1,5 +1,6 @@
 package com.liveintent.weather.weatherservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.liveintent.weather.weatherservice.model.Coordinates;
 import com.liveintent.weather.weatherservice.model.Forecast;
 import com.liveintent.weather.weatherservice.model.FullDayForecast;
@@ -8,7 +9,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Set;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -43,6 +50,11 @@ public class WeatherService {
         try {
             JSONParser parser = new JSONParser();
             JSONObject rawForecastResponseObject = (JSONObject) parser.parse(response.body());
+            //@todo hpaup delete FullDayForecastSchema.json if not using it!
+            if(!this.validateSchema(rawForecastResponseObject)) {
+                //@todo hpaup return error message back to frontend
+                return null;
+            }
 
             //@todo hpaup consider just storing and returning these as strings and getting rid of all this
             Coordinates coordinates = new Coordinates();
@@ -75,6 +87,8 @@ public class WeatherService {
             Forecast fourDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(4));
             Forecast fiveDaysFromNow = this.parseIndividualForecast((JSONObject) mainData.get(5));
 
+
+
             fiveDayLookahead[0] = tomorrow;
             fiveDayLookahead[1] = twoDaysFromNow;
             fiveDayLookahead[2] = threeDaysFromNow;
@@ -102,6 +116,352 @@ public class WeatherService {
         }
 
         return null;
+    }
+
+    private boolean validateSchema(JSONObject rawForecastResponseObject) throws JsonProcessingException {
+        JsonSchema schema = getJsonSchema("#WeatherbitForecaseResponseSchema.json");
+        Set<ValidationMessage> errors = schema.validate(new ObjectMapper().readTree(String.valueOf(rawForecastResponseObject)));
+        return errors.isEmpty();
+    }
+
+    protected JsonSchema getJsonSchema(String schemaId) {
+        JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
+        //return factory.getSchema("../../resources/static/FullDayForecastSchema.json"); //@todo hpaup this didn't work
+        return factory.getSchema(
+                "{\n" +
+                        "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n" +
+                        "  \"$id\": \"#WeatherbitForecaseResponseSchema.json\",\n" +
+                        "  \"type\": \"object\",\n" +
+                        "  \"properties\": {\n" +
+                        "    \"city_name\": {\n" +
+                        "      \"type\": \"string\"\n" +
+                        "    },\n" +
+                        "    \"data\": {\n" +
+                        "      \"type\": \"array\",\n" +
+                        "      \"items\": [\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"type\": \"object\",\n" +
+                        "          \"properties\": {\n" +
+                        "            \"max_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"min_temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"rh\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"temp\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            },\n" +
+                        "            \"valid_date\": {\n" +
+                        "              \"type\": \"string\"\n" +
+                        "            },\n" +
+                        "            \"weather\": {\n" +
+                        "              \"type\": \"object\",\n" +
+                        "              \"properties\": {\n" +
+                        "                \"description\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                },\n" +
+                        "                \"icon\": {\n" +
+                        "                  \"type\": \"string\"\n" +
+                        "                }\n" +
+                        "              },\n" +
+                        "              \"required\": [\n" +
+                        "                \"description\",\n" +
+                        "                \"icon\"\n" +
+                        "              ]\n" +
+                        "            },\n" +
+                        "            \"wind_spd\": {\n" +
+                        "              \"type\": \"number\"\n" +
+                        "            }\n" +
+                        "          },\n" +
+                        "          \"required\": [\n" +
+                        "            \"max_temp\",\n" +
+                        "            \"min_temp\",\n" +
+                        "            \"rh\",\n" +
+                        "            \"temp\",\n" +
+                        "            \"valid_date\",\n" +
+                        "            \"weather\",\n" +
+                        "            \"wind_spd\"\n" +
+                        "          ]\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    \"lat\": {\n" +
+                        "      \"type\": \"string\"\n" +
+                        "    },\n" +
+                        "    \"lon\": {\n" +
+                        "      \"type\": \"string\"\n" +
+                        "    }\n" +
+                        "  },\n" +
+                        "  \"required\": [\n" +
+                        "    \"city_name\",\n" +
+                        "    \"data\",\n" +
+                        "    \"lat\",\n" +
+                        "    \"lon\"\n" +
+                        "  ]\n" +
+                        "}"
+        );
+        /**return factory.getSchema(
+                "{\n"
+                        + "  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n"
+                        + "  \"$id\": \"#MyJsonClassSchema.json\",\n"
+                        + "  \"type\": \"object\",\n"
+                        + "  \"properties\": {\n"
+                        + "    \"myProperty\": {\n"
+                        + "      \"oneOf\": [\n"
+                        + "        {\n"
+                        + "          \"type\": \"string\"\n"
+                        + "        },\n"
+                        + "        {\n"
+                        + "          \"type\": \"array\",\n"
+                        + "          \"items\": [\n"
+                        + "            {\n"
+                        + "              \"type\": \"string\"\n"
+                        + "            }\n"
+                        + "          ]\n"
+                        + "        }\n"
+                        + "      ]\n"
+                        + "    }\n"
+                        + "  }\n"
+                        + "}"
+        );*/
     }
 
     private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
