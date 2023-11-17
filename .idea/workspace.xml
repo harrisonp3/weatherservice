@@ -7,10 +7,9 @@
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/SearchBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/FullDayForecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/FullDayForecast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/UnitSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/UnitSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +143,8 @@
       <workItem from="1700069693551" duration="3166000" />
       <workItem from="1700145815281" duration="2193000" />
       <workItem from="1700154550488" duration="1558000" />
-      <workItem from="1700176704103" duration="3518000" />
+      <workItem from="1700176704103" duration="3581000" />
+      <workItem from="1700247606588" duration="1862000" />
     </task>
     <servers />
   </component>
@@ -172,12 +172,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
-          <line>43</line>
+          <line>47</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
-          <line>70</line>
+          <line>74</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

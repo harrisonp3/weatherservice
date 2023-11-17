@@ -7,6 +7,7 @@ const SearchBar = () => {
     const [latSearchInput, setLatSearchInput] = useState("");
     const [lonSearchInput, setLonSearchInput] = useState("");
     const [measurementUnit, setMeasurementUnit] = useState("imperial");
+    const [errorMessage, setErrorMessage] = useState("");
     const [forecasts, setForecasts] = useState([
         {
             id: nextId,
@@ -120,9 +121,11 @@ const SearchBar = () => {
                             },
                             fiveDayForecast: data.fiveDayForecast
                     }
-                    ]);//@todo hpaup the forecasts.map rednering below didn't work until i wrapped the data here in a array
+                    ]);
+                    // Clear the error message if there was one because we got a successful response back
+                    setErrorMessage("");
                 }).catch(error => {
-                    //handle error
+                    setErrorMessage(error.toString());
                 });
         }
     };
@@ -150,6 +153,11 @@ const SearchBar = () => {
             onKeyUp={handleKeyUp}
             value={lonSearchInput} />
             <div>
+                {errorMessage &&
+                    <div className={"red-text"}>
+                        Error: {errorMessage}
+                    </div>
+                }
                 {forecasts.map((forecast) => {
                     return(
                         <table>
