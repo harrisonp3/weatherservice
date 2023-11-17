@@ -40,3 +40,18 @@
 nav + .container, nav + .container-fluid {
   margin-top: 20px;
 }
+
+table {
+  border-collapse: collapse;
+}
+
+.table-h-table-r {
+  border: 1px solid black;
+}
+.cell-highlight {
+  background-color: gold;
+  font-weight: bold;
+}
+.bold {
+  font-weight: bold;
+}

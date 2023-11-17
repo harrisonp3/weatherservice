@@ -5,6 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dfce6dd-f2d7-4ca6-87d7-44a0b4a1b31d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/SearchBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/Forecast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/FullDayForecast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/model/FullDayForecast.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +143,8 @@
       <workItem from="1700061564205" duration="64000" />
       <workItem from="1700069693551" duration="3166000" />
       <workItem from="1700145815281" duration="2193000" />
-      <workItem from="1700154550488" duration="1503000" />
+      <workItem from="1700154550488" duration="1558000" />
+      <workItem from="1700176704103" duration="3518000" />
     </task>
     <servers />
   </component>
@@ -161,6 +168,20 @@
     </ignored-roots>
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/liveintent/weather/weatherservice/service/WeatherService.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="jdk.internal.net.http.HttpResponseImpl" memberName="rawChannelProvider" />

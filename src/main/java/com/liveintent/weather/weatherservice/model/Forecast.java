@@ -7,4 +7,6 @@ public class Forecast {
     private double minTemp;
     private double maxTemp;
     private String description;
+    private String cityName;
+    private String validDate;
 }

@@ -22,6 +22,8 @@ import org.springframework.web.client.RestTemplate;
 public class WeatherService {
     // 6 because we get today, and then 5 days after that for forecast lookahead
     private static final int DAILY_RESULT_LIMIT = 6;
+    private static final String CITY_NAME_KEY = "city_name";
+    private static final String VALID_DATE_KEY = "valid_date";
     @Autowired
     private RestTemplate template = new RestTemplate();
 
@@ -30,6 +32,13 @@ public class WeatherService {
     }*/
 
 
+    private String safelyExtractValueAsString(JSONObject o, String key) {
+        Object x = o.get(key);
+        if (x instanceof String) {
+            return (String) x;
+        }
+        return "";
+    }
     private FullDayForecast parseWeatherbitForecast(HttpResponse<String> response) throws ParseException {
         try {
             JSONParser parser = new JSONParser();
@@ -42,6 +51,8 @@ public class WeatherService {
             double lonDouble = safelyExtractNumberValueAsDouble(rawForecastResponseObject, "lon");
             coordinates.setLatitude(latDouble);
             coordinates.setLongitude(lonDouble);
+
+            String cityName = safelyExtractValueAsString(rawForecastResponseObject, CITY_NAME_KEY);
 
             JSONArray mainData = (JSONArray) rawForecastResponseObject.get("data");
             JSONObject today = (JSONObject) mainData.get(0);
@@ -80,6 +91,7 @@ public class WeatherService {
             fore.setTemp(rightNowTemp);
             fore.setDescription(desc);
             fore.setWindSpeed(windSpeed);
+            fore.setCityName(cityName);
             System.out.println("Here is the Forecast model: ");
             System.out.println(fore);
             return fore;
@@ -113,7 +125,10 @@ public class WeatherService {
         double maxTemp = this.safelyExtractNumberValueAsDouble(today, "max_temp");
         double minTemp = this.safelyExtractNumberValueAsDouble(today, "min_temp");
 
+        String validDate = this.safelyExtractValueAsString(today, VALID_DATE_KEY);
+
         Forecast forecast = new Forecast();
+        forecast.setValidDate(validDate);
         forecast.setDescription(desc);
         forecast.setMaxTemp(maxTemp);
         forecast.setMinTemp(minTemp);

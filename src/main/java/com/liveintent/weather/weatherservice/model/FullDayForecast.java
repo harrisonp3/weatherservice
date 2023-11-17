@@ -10,4 +10,6 @@ public class FullDayForecast extends Forecast {
     private double windSpeed;
     private double temp;
     private Forecast[] fiveDayForecast;
+
+
 }

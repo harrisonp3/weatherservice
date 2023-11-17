@@ -16,6 +16,7 @@ const SearchBar = () => {
             maxTemp: 54,
             icon: "10n",
             windSpeed: 56,
+            cityName: "Lima",
             coordinates: {
                 latitude: -75.121,
                 longitude: -67.009
@@ -24,15 +25,18 @@ const SearchBar = () => {
                 {
                     "minTemp": 65.8,
                     "maxTemp": 72.0,
-                    "description": "Overcast clouds"
+                    "description": "Overcast clouds",
+                    "validDate": "2023-11-01"
                 },
                 {
                     "minTemp": 65.7,
                     "maxTemp": 72.7,
-                    "description": "Overcast clouds"
+                    "description": "Overcast clouds",
+                    "validDate": "2023-11-02"
+
                 }
             ]
-        }, {
+        }/**, {
             id: nextId++,
             description: "alt dummy text - delete me",
             humidity: 12,
@@ -40,6 +44,7 @@ const SearchBar = () => {
             maxTemp: 54,
             icon: "01n",
             windSpeed: 56,
+            cityName: "Boston",
             coordinates: {
                 latitude: -75.009,
                 longitude: -67.890
@@ -48,15 +53,17 @@ const SearchBar = () => {
                 {
                     minTemp: 65.8,
                     maxTemp: 72.0,
-                    description: "Overcast clouds"
+                    description: "Overcast clouds",
+                    validDate: "2023-11-01"
                 },
                 {
                     minTemp: 65.7,
                     maxTemp: 72.7,
-                    description: "Overcast clouds"
+                    description: "Overcast clouds",
+                    validDate: "2023-11-02"
                 }
                 ]
-        }
+        }*/
     ]);
     const handleCityChange = (e) => {
         e.preventDefault();
@@ -103,6 +110,7 @@ const SearchBar = () => {
                             humidity: data.humidity,
                             description: data.description,
                             minTemp: data.minTemp,
+                            cityName: data.cityName,
                             maxTemp: data.maxTemp,
                             icon: data.icon.substring(1),// for some reason they get retuned from API with a "c"- prefix so I remove that here
                             windSpeed: data.windSpeed,
@@ -141,33 +149,46 @@ const SearchBar = () => {
             onChange={handleLongitudeChange}
             onKeyUp={handleKeyUp}
             value={lonSearchInput} />
-        <table>
-            <tr>
-                Dummy text - hpaup delete me...
+            <div>
                 {forecasts.map((forecast) => {
                     return(
-                        <tr>
-                            <td>Description: {forecast.description}</td>
-                            <td>Humidity: {forecast.humidity}</td>
-                            <td>Windspeed: {forecast.windSpeed}</td>
-                            <td>Icon: <img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
-                            <td>Minimum temperature: {forecast.minTemp}</td>
-                            <td>Maximum temperature: {forecast.maxTemp}</td>
-                            <td>Latitude: {forecast.coordinates.latitude}</td>
-                            <td>Longitude: {forecast.coordinates.longitude}</td>
-                            {forecast.fiveDayForecast.map((miniForecast) => {
-                                return (
-                                    <tr>
-                                        <td>MINI MIN TEMP:{miniForecast.minTemp}</td>
-                                        <td>MINI MAX TEMP:{miniForecast.maxTemp}</td>
-                                        <td>MINI DESCRIPTION:{miniForecast.description}</td>
-                                    </tr>
-                                )
-                            })}
-                        </tr>
+                        <table>
+                            <tr>
+                                <td className={"table-h-table-r bold"}>City:</td>
+                                <td className={"table-h-table-r bold"}>Description:</td>
+                                <td className={"table-h-table-r bold"}>Humidity:</td>
+                                <td className={"table-h-table-r bold"}>Windspeed:</td>
+                                <td className={"table-h-table-r bold"}>Icon:</td>
+                                <td className={"table-h-table-r bold"}>Minimum temperature:</td>
+                                <td className={"table-h-table-r bold"}>Maximum temperature:</td>
+                                <td className={"table-h-table-r bold"}>Latitude:</td>
+                                <td className={"table-h-table-r bold"}>Longitude:</td>
+                            </tr>
+                            <tr className={"table-h-table-r"}>
+                                <td className={"table-h-table-r"}>{forecast.cityName}</td>
+                                <td className={"table-h-table-r"}>{forecast.description}</td>
+                                <td className={"table-h-table-r"}>{forecast.humidity}</td>
+                                <td className={"table-h-table-r"}>{forecast.windSpeed}</td>
+                                <td className={"table-h-table-r"}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
+                                <td className={"table-h-table-r"}>{forecast.minTemp}</td>
+                                <td className={"table-h-table-r"}>{forecast.maxTemp}</td>
+                                <td className={"table-h-table-r"}>{forecast.coordinates.latitude}</td>
+                                <td className={"table-h-table-r"}> {forecast.coordinates.longitude}</td>
+                                {forecast.fiveDayForecast.map((miniForecast) => {
+                                    return (
+                                        <tr className={"table-h-table-r"}>
+                                            <td className={"table-h-table-r"}>Date: {miniForecast.validDate}</td>
+                                            <td className={"table-h-table-r"}>Min temp:{miniForecast.minTemp}</td>
+                                            <td className={"table-h-table-r"}>Max temp:{miniForecast.maxTemp}</td>
+                                            <td className={"table-h-table-r"}>Description:{miniForecast.description}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tr>
+                        </table>
+
                     )})}
-            </tr>
-        </table>
+            </div>
     </div>
 };
 
