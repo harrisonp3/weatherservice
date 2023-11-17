@@ -139,288 +139,12 @@ public class WeatherService {
                         "    \"data\": {\n" +
                         "      \"type\": \"array\",\n" +
                         "      \"items\": [\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        },\n" +
-                        "        {\n" +
-                        "          \"type\": \"object\",\n" +
-                        "          \"properties\": {\n" +
-                        "            \"max_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"min_temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"rh\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"temp\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            },\n" +
-                        "            \"valid_date\": {\n" +
-                        "              \"type\": \"string\"\n" +
-                        "            },\n" +
-                        "            \"weather\": {\n" +
-                        "              \"type\": \"object\",\n" +
-                        "              \"properties\": {\n" +
-                        "                \"description\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                },\n" +
-                        "                \"icon\": {\n" +
-                        "                  \"type\": \"string\"\n" +
-                        "                }\n" +
-                        "              },\n" +
-                        "              \"required\": [\n" +
-                        "                \"description\",\n" +
-                        "                \"icon\"\n" +
-                        "              ]\n" +
-                        "            },\n" +
-                        "            \"wind_spd\": {\n" +
-                        "              \"type\": \"number\"\n" +
-                        "            }\n" +
-                        "          },\n" +
-                        "          \"required\": [\n" +
-                        "            \"max_temp\",\n" +
-                        "            \"min_temp\",\n" +
-                        "            \"rh\",\n" +
-                        "            \"temp\",\n" +
-                        "            \"valid_date\",\n" +
-                        "            \"weather\",\n" +
-                        "            \"wind_spd\"\n" +
-                        "          ]\n" +
-                        "        }\n" +
+                        this.getIndividualDayForecastSchema() + ", " +
+                        this.getIndividualDayForecastSchema() + ", " +
+                        this.getIndividualDayForecastSchema() + ", " +
+                        this.getIndividualDayForecastSchema() + ", " +
+                        this.getIndividualDayForecastSchema() + ", " +
+                        this.getIndividualDayForecastSchema() +
                         "      ]\n" +
                         "    },\n" +
                         "    \"lat\": {\n" +
@@ -464,6 +188,55 @@ public class WeatherService {
         );*/
     }
 
+    private String getIndividualDayForecastSchema() {
+        return "{\n" +
+                "          \"type\": \"object\",\n" +
+                "          \"properties\": {\n" +
+                "            \"max_temp\": {\n" +
+                "              \"type\": \"number\"\n" +
+                "            },\n" +
+                "            \"min_temp\": {\n" +
+                "              \"type\": \"number\"\n" +
+                "            },\n" +
+                "            \"rh\": {\n" +
+                "              \"type\": \"number\"\n" +
+                "            },\n" +
+                "            \"temp\": {\n" +
+                "              \"type\": \"number\"\n" +
+                "            },\n" +
+                "            \"valid_date\": {\n" +
+                "              \"type\": \"string\"\n" +
+                "            },\n" +
+                "            \"weather\": {\n" +
+                "              \"type\": \"object\",\n" +
+                "              \"properties\": {\n" +
+                "                \"description\": {\n" +
+                "                  \"type\": \"string\"\n" +
+                "                },\n" +
+                "                \"icon\": {\n" +
+                "                  \"type\": \"string\"\n" +
+                "                }\n" +
+                "              },\n" +
+                "              \"required\": [\n" +
+                "                \"description\",\n" +
+                "                \"icon\"\n" +
+                "              ]\n" +
+                "            },\n" +
+                "            \"wind_spd\": {\n" +
+                "              \"type\": \"number\"\n" +
+                "            }\n" +
+                "          },\n" +
+                "          \"required\": [\n" +
+                "            \"max_temp\",\n" +
+                "            \"min_temp\",\n" +
+                "            \"rh\",\n" +
+                "            \"temp\",\n" +
+                "            \"valid_date\",\n" +
+                "            \"weather\",\n" +
+                "            \"wind_spd\"\n" +
+                "          ]\n" +
+                "        }";
+    }
     private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
         //@todo hpaup add try catch exception handling
         double temp = 0;
