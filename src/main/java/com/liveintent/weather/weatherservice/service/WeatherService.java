@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
 @Service
 public class WeatherService {
     // 6 because we get today, and then 5 days after that for forecast lookahead
@@ -47,12 +46,13 @@ public class WeatherService {
     @Autowired
     private RestTemplate template = new RestTemplate();
 
-
-
     /**
-     * @todo hpaup fill out
-     * @param response
-     * @return
+     * Transformation logic lives here - taking the HttpResponse and the JSON it contains and using
+     * the data to construct our FullDayForecast model
+     *
+     * @param response HttpResponse<String> Response from calling external API
+     *
+     * @return FullDayForecast Forecast model that includes the five day lookahead data
      * @throws ParseException
      */
     private FullDayForecast parseWeatherbitForecast(HttpResponse<String> response) throws ParseException {
@@ -123,15 +123,20 @@ public class WeatherService {
             return fore;
         }
         catch (Exception e) {
-            //@todo hpaup handle error
+            //@todo handle error
             System.out.println(e.getMessage());
         }
-
         return null;
     }
 
-
-
+    /**
+     * Extract data from JSONObject for an individual forecast model, build out that
+     * model and return it
+     *
+     * @param today JSONObject Object we want to pull forecast metadata from
+     *
+     * @return Forecast model we built
+     */
     private Forecast parseIndividualForecast(JSONObject today) {
         JSONObject weatherBlock = (JSONObject) today.get(WEATHER_KEY);
         String desc = (String) weatherBlock.get(DESCRIPTION_KEY);
@@ -149,6 +154,15 @@ public class WeatherService {
         return forecast;
     }
 
+    /**
+     * Fetch five day forecast from external API using "city" query parameter in the request
+     *
+     * @param city   String City we want to search for
+     * @param apiKey String API key used to authenticate our app to external API
+     * @param units  String Units we want our results in {"M", "I", "S"}
+     *
+     * @return FullDayForecast Returns FullDayForecast model
+     */
     public FullDayForecast fetchFiveDayForecastByCity(String city, String apiKey, String units) {
         String requestUri =
                 API_ENDPOINT_BASE +
@@ -180,19 +194,35 @@ public class WeatherService {
         return null;
     }
 
+    /**
+     * Replace spaces in a string with "%20"
+     *
+     * @param raw String input to modify by replacing spaces
+     *
+     * @return String result with spaces replaced
+     */
     private String replaceSpaces(String raw) {
         try {
             return raw.replaceAll("\\x20", "%20");
         } catch (Exception e) {
-            //@todo hpaup handle error
+            //@todo handle error
             return "";
         }
-
     }
 
     //@todo hpaup refactor so instead of passing parameters through several layers in the same way, create a
     //@todo hpaup forecast request model or something and make city,apiKey, units attributes of the model so you can pass that
     //@todo hpaup and reuse it in the service for subsequent calls
+    /**
+     * Fetch five day forecast from external API using "lat" and "lon" query parameters in the request
+     *
+     * @param lat    String Latitude we want to search for
+     * @param lon    String Longitude we want to search for
+     * @param apiKey String API key used to authenticate our app to external API
+     * @param units  String Units we want our results in {"M", "I", "S"}
+     *
+     * @return FullDayForecast Returns FullDayForecast model
+     */
     public FullDayForecast fetchFiveDayForecastByCoords(String lat, String lon, String apiKey, String units) {
         String requestUri =
                 API_ENDPOINT_BASE +
@@ -227,9 +257,12 @@ public class WeatherService {
     }
 
     /**
-     * @todo hpaup fill out
-     * @param rawForecastResponseObject
-     * @return
+     * Validate that our JSON object from third party API is in the shape we expect for the rest of
+     * our logic to work as expected!
+     *
+     * @param rawForecastResponseObject JSONObject Raw object we're validating against defined JSON schema
+     *
+     * @return Boolean true if object is in the shape we expect
      * @throws JsonProcessingException
      */
     private boolean validateSchema(JSONObject rawForecastResponseObject) throws JsonProcessingException {
@@ -239,9 +272,87 @@ public class WeatherService {
     }
 
     /**
-     * @todo hpaup
-     * @param schemaId
-     * @return
+     * Extract number value safely from JSONObject and cast as Double
+     *
+     * @param rawObject JSONObject Object we want to pull data from
+     * @param key       String     Key to use to pull from JSONObject
+     *
+     * @return Double value we wanted
+     */
+    private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
+        double temp = 0;
+        try {
+            Object tempRaw = rawObject.get(key);
+            if (tempRaw instanceof Double) {
+                temp = (double) rawObject.get(key);
+            } else if (tempRaw instanceof String) {
+                temp = Double.parseDouble((String) tempRaw);
+            } else if (tempRaw instanceof Long) {
+                temp = Double.parseDouble(Long.toString((Long) tempRaw));
+            }
+            return temp;
+        } catch(Exception e) {
+            //@todo handle error
+        }
+        return temp;
+    }
+
+    /**
+     * Extract number value safely from JSONObject and cast as Long
+     *
+     * @param rawObject JSONObject Object we want to pull data from
+     * @param key       String     Key to use to pull from JSONObject
+     *
+     * @return Long value we wanted
+     */
+    private long safelyExtractNumberValueAsLong(JSONObject rawObject, String key) {
+        long temp = 0;
+        try {
+            Object tempRaw = rawObject.get(key);
+            if (tempRaw instanceof Double) {
+                System.out.println("trying to cast double to long");
+                Double tempAsDouble = (Double) rawObject.get(key);
+                temp = Double.valueOf(tempAsDouble).longValue();
+            } else if (tempRaw instanceof String) {
+                temp = Long.parseLong((String) tempRaw);
+            } else if (tempRaw instanceof Long) {
+                temp = (long) tempRaw;
+            }
+            return temp;
+        } catch(Exception e) {
+            //@todo handle error
+        }
+        return temp;
+    }
+
+    /**
+     * Extract string value from JSONObject or return empty string
+     *
+     * @param o   JSONObject Object we want to pull data from
+     * @param key String     Key to use to pull from JSONObject
+     *
+     * @return String empty if unable to retrieve
+     */
+    private String safelyExtractValueAsString(JSONObject o, String key) {
+        try {
+            Object x = o.get(key);
+            if (x instanceof String) {
+                return (String) x;
+            }
+            return "";
+        } catch(Exception e) {
+            //@todo handle error
+        }
+        return "";
+    }
+
+    /**
+     * Returns the entire JSON schema (which is really big) we want to validate our
+     * API response against
+     *
+     * @param schemaId String ID used to fetch schema from factory
+     *
+     * @return JsonSchema returns the schema object
      */
     protected JsonSchema getJsonSchema(String schemaId) {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
@@ -283,8 +394,9 @@ public class WeatherService {
     }
 
     /**
-     * @todo hpaup fill out
-     * @return
+     * Pulled this part of the schema into its own method because the same text gets repeated
+     *
+     * @return String Schema shape
      */
     private String getIndividualDayForecastSchema() {
         return "{\n" +
@@ -334,59 +446,6 @@ public class WeatherService {
                 "            \"wind_spd\"\n" +
                 "          ]\n" +
                 "        }";
-    }
-
-    /**
-     * @todo hpaup fill out
-     * @param rawObject
-     * @param key
-     * @return
-     */
-    private double safelyExtractNumberValueAsDouble(JSONObject rawObject, String key) {
-        //@todo hpaup add try catch exception handling
-        double temp = 0;
-        Object tempRaw = rawObject.get(key);
-        if (tempRaw instanceof Double) {
-            temp = (double) rawObject.get(key);
-        } else if (tempRaw instanceof String) {
-            temp = Double.parseDouble((String) tempRaw);
-        } else if (tempRaw instanceof Long) {
-            temp = Double.parseDouble(Long.toString((Long) tempRaw));
-        }
-        return temp;
-    }
-
-    /**
-     * @todo hpaup fill out
-     * @param rawObject
-     * @param key
-     * @return
-     */
-    private long safelyExtractNumberValueAsLong(JSONObject rawObject, String key) {
-        //@todo hpaup add try catch exception handling
-        long temp = 0;
-        Object tempRaw = rawObject.get(key);
-        if (tempRaw instanceof Double) {
-            temp = (long) rawObject.get(key);
-        } else if (tempRaw instanceof String) {
-            temp = Long.parseLong((String) tempRaw);
-        } else if (tempRaw instanceof Long) {
-            temp = (long) tempRaw;
-        }
-        return temp;
-    }
-    /**
-     * @todo hpaup fill this out
-     * @param o
-     * @param key
-     * @return
-     */
-    private String safelyExtractValueAsString(JSONObject o, String key) {
-        Object x = o.get(key);
-        if (x instanceof String) {
-            return (String) x;
-        }
-        return "";
     }
 }
 
