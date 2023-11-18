@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.liveintent.weather.weatherservice.WeatherserviceApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 17.874 s <<< FAILURE! - in com.liveintent.weather.weatherservice.WeatherserviceApplicationTests
+shouldReturnString  Time elapsed: 0.125 s  <<< ERROR!
+java.lang.IllegalArgumentException: java.lang.NullPointerException: Cannot invoke "Object.getClass()" because "o" is null
+	at com.liveintent.weather.weatherservice.WeatherserviceApplicationTests.shouldReturnString(WeatherserviceApplicationTests.java:52)
+
+shouldReturnHumidityInMessage  Time elapsed: 0.554 s  <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<204>
+	at com.liveintent.weather.weatherservice.WeatherserviceApplicationTests.shouldReturnHumidityInMessage(WeatherserviceApplicationTests.java:46)
+
