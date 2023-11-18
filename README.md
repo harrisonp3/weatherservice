@@ -1,3 +1,6 @@
+# Welcome to weatherservice
+Built in IntelliJ using SDK: Oracle OpenJDK version 21
+
 ## Getting started
 From the weatherservice directory in your terminal, run the following:
 

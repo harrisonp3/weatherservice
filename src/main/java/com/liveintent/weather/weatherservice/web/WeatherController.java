@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liveintent.weather.weatherservice.model.FullDayForecast;
 import com.liveintent.weather.weatherservice.service.WeatherService;
 import java.util.Map;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,37 +35,37 @@ public class WeatherController {
     @GetMapping("/forecast")
     public ResponseEntity<FullDayForecast> getFiveDayForecastByCityOrCoordinates(@RequestParam Map<String, String> multipleParams) {
         try {
+            String city = "";
+            String lat = "";
+            String lon = "";
             // Set a default value for units if it wasn't passed for whatever reason
             String units = "M";
             if (multipleParams.containsKey("units")) {
                 units = multipleParams.get("units");
             }
-            // If city was passed, call service method that uses city name
+            // If city was passed, don't need to look for coordinate values
             if (multipleParams.containsKey("city")) {
-                String city = multipleParams.get("city");
-                FullDayForecast fore = service.fetchFiveDayForecastByCity(city, apiKey, units);
-                if (fore == null) {
-                    // http status 204
-                    return ResponseEntity.noContent().build();
-                }
-                ObjectMapper mapper = new ObjectMapper();
-                return ResponseEntity.ok().body(fore);
-                // If coordinates were passed instead, call service method that uses coords
+                city = multipleParams.get("city");
+            // If coordinates were passed instead, grab them
             } else if (multipleParams.containsKey("lat") && multipleParams.containsKey("lon")) {
-                String lat = multipleParams.get("lat");
-                String lon = multipleParams.get("lon");
-                FullDayForecast fore = service.fetchFiveDayForecastByCoords(lat, lon, apiKey, units);
-                if (fore == null) {
-                    // http status 204
-                    return ResponseEntity.noContent().build();
-                }
-                ObjectMapper mapper = new ObjectMapper();
-                return ResponseEntity.ok().body(fore);
+                lat = multipleParams.get("lat");
+                lon = multipleParams.get("lon");
             }
             else {
                 // Didn't pass required query params
                 return ResponseEntity.badRequest().build();
             }
+            // If "city" is an empty string, use coords instead and call fetchFiveDayForecastByCoords()
+            // otherwise, pass "city" into fetchFiveDayForecastByCity()
+            FullDayForecast fore = (!Objects.equals(city, "")) ?
+                    service.fetchFiveDayForecastByCity(city, apiKey, units) :
+                    service.fetchFiveDayForecastByCoords(lat, lon, apiKey, units);
+            if (fore == null) {
+                // http status 204
+                return ResponseEntity.noContent().build();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            return ResponseEntity.ok().body(fore);
         } catch(Exception e) {
             System.out.println(e.toString());
             return null;
