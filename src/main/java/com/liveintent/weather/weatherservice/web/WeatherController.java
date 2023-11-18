@@ -35,6 +35,7 @@ public class WeatherController {
                 String city = multipleParams.get("city");
                 FullDayForecast fore = service.fetchFiveDayForecastByCity(city, apiKey, units);
                 if (fore == null) {
+                    // http status 204
                     return ResponseEntity.noContent().build();
                 }
                 ObjectMapper mapper = new ObjectMapper();
@@ -46,6 +47,7 @@ public class WeatherController {
                 String lon = multipleParams.get("lon");
                 FullDayForecast fore = service.fetchFiveDayForecastByCoords(lat, lon, apiKey, units);
                 if (fore == null) {
+                    // http status 204
                     return ResponseEntity.noContent().build();
                 }
                 ObjectMapper mapper = new ObjectMapper();

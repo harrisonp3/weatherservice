@@ -48,8 +48,31 @@ class WeatherserviceApplicationTests {
 	}
 
 	@Test
-	void shouldReturnString() throws Exception {
-		assertEquals(null, getSafelyExtractValueAsStringMethod().invoke(null, new JSONObject(), "dummy_key"));
+	void getSafelyExtractValueAsStringMethodShouldReturnEmptyString() throws Exception {
+		JSONObject item = new JSONObject();
+		System.out.println("hpau pchanges reflected here ..... **** %%%% &&&");
+		item.put("dummy_key1", 1);
+		assertEquals("", getSafelyExtractValueAsStringMethod().invoke(service, item, "dummy_key2"));
+	}
+	@Test
+	void getSafelyExtractValueAsStringMethodShouldReturnIntValueAsEmptyString() throws Exception {
+		JSONObject item = new JSONObject();
+		item.put("dummy_key1", 1);
+		assertEquals("", getSafelyExtractValueAsStringMethod().invoke(service, item, "dummy_key1"));
+	}
+	@Test
+	void getSafelyExtractValueAsStringMethodShouldReturnDoubleValueAsEmptyString() throws Exception {
+		//@todo hpaup note that this isn't passing because the method only returns strings if string is found
+		JSONObject item = new JSONObject();
+		item.put("dummy_key1", (double) 1);
+		assertEquals("", getSafelyExtractValueAsStringMethod().invoke(service, item, "dummy_key1"));
+	}
+	@Test
+	void getSafelyExtractValueAsStringMethodShouldReturnStringValueAsString() throws Exception {
+		//@todo hpaup note that this isn't passing because the method only returns strings if string is found
+		JSONObject item = new JSONObject();
+		item.put("dummy_key1", "testing123");
+		assertEquals("testing123", getSafelyExtractValueAsStringMethod().invoke(service, item, "dummy_key1"));
 	}
 	private Method getSafelyExtractValueAsStringMethod() throws NoSuchMethodException {
 		Method method = WeatherService.class.getDeclaredMethod(
