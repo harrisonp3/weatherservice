@@ -7,6 +7,7 @@ const UnitSelector = (props) => {
         <form>
             Units:
             <select
+                aria-label={"unit-select"}
                 value={selected}
                 onChange={e => {
                     setSelected(e.target.value);

@@ -109,23 +109,26 @@ const SearchBar = () => {
             onSelectionChange={setMeasurementUnit}
         />
         <input className={"styled-input"}
-            type="search"
-            placeholder="Search here by city"
-            onChange={handleCityChange}
-            onKeyUp={handleKeyUp}
-            value={citySearchInput} /> OR
+               aria-label={"city-input"}
+               type="search"
+               placeholder="Search here by city"
+               onChange={handleCityChange}
+               onKeyUp={handleKeyUp}
+               value={citySearchInput} /> OR
         <input className={"styled-input"}
-            type="search"
-            placeholder="Latitude"
-            onChange={handleLatitudeChange}
-            onKeyUp={handleKeyUp}
-            value={latSearchInput} />
+               aria-label={"latitude-input"}
+               type="search"
+               placeholder="Latitude"
+               onChange={handleLatitudeChange}
+               onKeyUp={handleKeyUp}
+               value={latSearchInput} />
         <input className={"styled-input"}
-            type="search"
-            placeholder="Longitude"
-            onChange={handleLongitudeChange}
-            onKeyUp={handleKeyUp}
-            value={lonSearchInput} />
+               aria-label={"longitude-input"}
+               type="search"
+               placeholder="Longitude"
+               onChange={handleLongitudeChange}
+               onKeyUp={handleKeyUp}
+               value={lonSearchInput} />
             <div>
                 {errorMessage &&
                     <div className={"red-text"}>
@@ -135,8 +138,9 @@ const SearchBar = () => {
                 {forecasts.map((forecast) => {
                     return(
                         <div>
-                            <Table responsive variant={"dark"} striped bordered>
-                                <span className={"table-title"}>Today:</span>
+                            <Table responsive variant={"dark"} bordered aria-label={"main-forecast-table"}>
+                                <tbody>
+                                <tr className={"table-title"}><td>Today:</td></tr>
                                 <tr>
                                     <td className={"bold"}>City</td>
                                     <td className={"bold"}>Description</td>
@@ -147,21 +151,23 @@ const SearchBar = () => {
                                     <td className={"bold"}>Max. temp.</td>
                                     <td className={"bold"}>Latitude</td>
                                     <td className={"bold"}>Longitude</td>
-                                </tr>
-                                <tr className={""}>
-                                    <td className={""}>{forecast.cityName}</td>
-                                    <td className={""}>{forecast.description}</td>
-                                    <td className={""}>{forecast.humidity}</td>
-                                    <td className={""}>{forecast.windSpeed}</td>
-                                    <td className={""}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
-                                    <td className={""}>{forecast.minTemp}°</td>
-                                    <td className={""}>{forecast.maxTemp}°</td>
-                                    <td className={""}>{forecast.coordinates.latitude}</td>
-                                    <td className={""}> {forecast.coordinates.longitude}</td>
-                                </tr>
+                                 </tr>
+                                 <tr className={""}>
+                                     <td className={""}>{forecast.cityName}</td>
+                                     <td className={""}>{forecast.description}</td>
+                                     <td className={""}>{forecast.humidity}</td>
+                                     <td className={""}>{forecast.windSpeed}</td>
+                                     <td className={""}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
+                                     <td className={""}>{forecast.minTemp}°</td>
+                                     <td className={""}>{forecast.maxTemp}°</td>
+                                     <td className={""}>{forecast.coordinates.latitude}</td>
+                                     <td className={""}> {forecast.coordinates.longitude}</td>
+                                 </tr>
+                                </tbody>
                             </Table>
-                            <Table responsive bordered variant={"dark"} striped>
-                                <span className={"table-title"}>Coming up:</span>
+                            <Table responsive bordered variant={"dark"} aria-label={"secondary-forecast-table"}>
+                                <tbody>
+                                <tr className={"table-title"}><td>Coming up:</td></tr>
                                 <tr>
                                     <td className={"bold"}>Date</td>
                                     <td className={"bold"}>Min. temp.</td>
@@ -178,6 +184,7 @@ const SearchBar = () => {
                                         </tr>
                                     )
                                 })}
+                                </tbody>
                             </Table>
                         </div>
                     )})}
