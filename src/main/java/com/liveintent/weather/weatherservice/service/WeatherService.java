@@ -59,11 +59,10 @@ public class WeatherService {
         try {
             JSONParser parser = new JSONParser();
             JSONObject rawForecastResponseObject = (JSONObject) parser.parse(response.body());
-            //@todo hpaup delete FullDayForecastSchema.json if not using it!
             // Validate the response object shape with our defined json schema, if it doesn't
             // pass validation, return error
             if(!this.validateSchema(rawForecastResponseObject)) {
-                //@todo hpaup return error message back to frontend
+                //@todo return error message back to frontend
                 return null;
             }
 
@@ -210,9 +209,6 @@ public class WeatherService {
         }
     }
 
-    //@todo hpaup refactor so instead of passing parameters through several layers in the same way, create a
-    //@todo hpaup forecast request model or something and make city,apiKey, units attributes of the model so you can pass that
-    //@todo hpaup and reuse it in the service for subsequent calls
     /**
      * Fetch five day forecast from external API using "lat" and "lon" query parameters in the request
      *

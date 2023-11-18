@@ -17,11 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class WeatherController {
     private final Logger log = LoggerFactory.getLogger(WeatherController.class);
+    //@todo abstract this out so it's secure and not hard-coded here
     private static final String apiKey = "361873f7ccfe4de08d96b649c583eb27";
 
     @Autowired
     private WeatherService service;
 
+    /**
+     * Main endpoint for frontend client code to hit, on success returns populated FullDayForecast model
+     * in a ResponseEntity
+     *
+     * @param multipleParams Map<String, String> should contain "units" AND ("city" OR "lat" & "lon")
+     *
+     * @return ResponseEntity<FullDayForecast> If fetch is successful, returns FullDayForecast with data
+     */
     @GetMapping("/forecast")
     public ResponseEntity<FullDayForecast> getFiveDayForecastByCityOrCoordinates(@RequestParam Map<String, String> multipleParams) {
         try {
@@ -39,7 +48,6 @@ public class WeatherController {
                     return ResponseEntity.noContent().build();
                 }
                 ObjectMapper mapper = new ObjectMapper();
-                System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 return ResponseEntity.ok().body(fore);
                 // If coordinates were passed instead, call service method that uses coords
             } else if (multipleParams.containsKey("lat") && multipleParams.containsKey("lon")) {
@@ -51,10 +59,10 @@ public class WeatherController {
                     return ResponseEntity.noContent().build();
                 }
                 ObjectMapper mapper = new ObjectMapper();
-                System.out.println("here is the stringified response: " + mapper.writeValueAsString(fore));
                 return ResponseEntity.ok().body(fore);
             }
             else {
+                // Didn't pass required query params
                 return ResponseEntity.badRequest().build();
             }
         } catch(Exception e) {

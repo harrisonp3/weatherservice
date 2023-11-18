@@ -7,34 +7,34 @@ const SearchBar = () => {
     const [citySearchInput, setCitySearchInput] = useState("");
     const [latSearchInput, setLatSearchInput] = useState("");
     const [lonSearchInput, setLonSearchInput] = useState("");
-    const [measurementUnit, setMeasurementUnit] = useState("imperial");
+    const [measurementUnit, setMeasurementUnit] = useState("I");
     const [errorMessage, setErrorMessage] = useState("");
     const [forecasts, setForecasts] = useState([
         {
             id: nextId,
-            description: "default dummy text - delete me",
-            humidity: 70,
-            minTemp: 45,
-            maxTemp: 54,
-            icon: "10n",
-            windSpeed: 56,
-            cityName: "Lima",
+            description: "",
+            humidity: null,
+            minTemp: null,
+            maxTemp: null,
+            icon: "",
+            windSpeed: null,
+            cityName: "",
             coordinates: {
-                latitude: -75.121,
-                longitude: -67.009
+                latitude: null,
+                longitude: null
             },
             fiveDayForecast: [
                 {
-                    "minTemp": 65.8,
-                    "maxTemp": 72.0,
-                    "description": "Overcast clouds",
-                    "validDate": "2023-11-01"
+                    "minTemp": null,
+                    "maxTemp": null,
+                    "description": "",
+                    "validDate": ""
                 },
                 {
-                    "minTemp": 65.7,
-                    "maxTemp": 72.7,
-                    "description": "Overcast clouds",
-                    "validDate": "2023-11-02"
+                    "minTemp": null,
+                    "maxTemp": null,
+                    "description": "",
+                    "validDate": ""
 
                 }
             ]
@@ -45,9 +45,7 @@ const SearchBar = () => {
         setCitySearchInput(e.target.value);
         setLatSearchInput("");
         setLonSearchInput("");
-        console.log(forecasts);
     };
-
     const handleLatitudeChange = (e) => {
         e.preventDefault();
         setLatSearchInput(e.target.value);
@@ -59,23 +57,15 @@ const SearchBar = () => {
         setLonSearchInput(e.target.value);
         setCitySearchInput("");
     };
-
-
-
     const handleKeyUp = (e) => {
         e.preventDefault();
         if (e.keyCode === 13) {
             let queryParams = citySearchInput ? `city=${citySearchInput}` : `lat=${latSearchInput}&lon=${lonSearchInput}`;
-            console.log(measurementUnit);
-            console.log("attempting fetch 2.0");
             fetch(`/api/forecast?` + queryParams + `&units=${measurementUnit}`)
                 .then(response => {
-                    console.log(response.data);
-                    console.log(response);
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     setForecasts([
                         // Un-comment the spread operator to make the results additive - so each time
                         // you look one up it appends to the view instead of replaces last results
@@ -87,7 +77,7 @@ const SearchBar = () => {
                             minTemp: data.minTemp,
                             cityName: data.cityName,
                             maxTemp: data.maxTemp,
-                            icon: data.icon.substring(1),// for some reason they get retuned from API with a "c"- prefix so I remove that here
+                            icon: data.icon.substring(1),// for some reason they get returned from API with a "c"- prefix so I removed that here
                             windSpeed: data.windSpeed,
                             coordinates: {
                                 latitude: data.coord.latitude,
@@ -157,7 +147,7 @@ const SearchBar = () => {
                                      <td className={""}>{forecast.description}</td>
                                      <td className={""}>{forecast.humidity}</td>
                                      <td className={""}>{forecast.windSpeed}</td>
-                                     <td className={""}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
+                                     <td className={""}>{forecast.icon && <img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} alt={""} />}</td>
                                      <td className={""}>{forecast.minTemp}°</td>
                                      <td className={""}>{forecast.maxTemp}°</td>
                                      <td className={""}>{forecast.coordinates.latitude}</td>
