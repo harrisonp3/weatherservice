@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UnitSelector from "./UnitSelector";
+import { Table } from 'reactstrap';
 
 let nextId = 0;
 const SearchBar = () => {
@@ -37,34 +38,7 @@ const SearchBar = () => {
 
                 }
             ]
-        }/**, {
-            id: nextId++,
-            description: "alt dummy text - delete me",
-            humidity: 12,
-            minTemp: 45,
-            maxTemp: 54,
-            icon: "01n",
-            windSpeed: 56,
-            cityName: "Boston",
-            coordinates: {
-                latitude: -75.009,
-                longitude: -67.890
-            },
-            fiveDayForecast: [
-                {
-                    minTemp: 65.8,
-                    maxTemp: 72.0,
-                    description: "Overcast clouds",
-                    validDate: "2023-11-01"
-                },
-                {
-                    minTemp: 65.7,
-                    maxTemp: 72.7,
-                    description: "Overcast clouds",
-                    validDate: "2023-11-02"
-                }
-                ]
-        }*/
+        }
     ]);
     const handleCityChange = (e) => {
         e.preventDefault();
@@ -130,23 +104,23 @@ const SearchBar = () => {
         }
     };
 
-    return <div>
+    return <div className={"body-font-styling"}>
         <UnitSelector
             onSelectionChange={setMeasurementUnit}
         />
-        <input
+        <input className={"styled-input"}
             type="search"
             placeholder="Search here by city"
             onChange={handleCityChange}
             onKeyUp={handleKeyUp}
             value={citySearchInput} /> OR
-        <input
+        <input className={"styled-input"}
             type="search"
             placeholder="Latitude"
             onChange={handleLatitudeChange}
             onKeyUp={handleKeyUp}
             value={latSearchInput} />
-        <input
+        <input className={"styled-input"}
             type="search"
             placeholder="Longitude"
             onChange={handleLongitudeChange}
@@ -160,41 +134,52 @@ const SearchBar = () => {
                 }
                 {forecasts.map((forecast) => {
                     return(
-                        <table>
-                            <tr>
-                                <td className={"table-h-table-r bold"}>City:</td>
-                                <td className={"table-h-table-r bold"}>Description:</td>
-                                <td className={"table-h-table-r bold"}>Humidity:</td>
-                                <td className={"table-h-table-r bold"}>Windspeed:</td>
-                                <td className={"table-h-table-r bold"}>Icon:</td>
-                                <td className={"table-h-table-r bold"}>Minimum temperature:</td>
-                                <td className={"table-h-table-r bold"}>Maximum temperature:</td>
-                                <td className={"table-h-table-r bold"}>Latitude:</td>
-                                <td className={"table-h-table-r bold"}>Longitude:</td>
-                            </tr>
-                            <tr className={"table-h-table-r"}>
-                                <td className={"table-h-table-r"}>{forecast.cityName}</td>
-                                <td className={"table-h-table-r"}>{forecast.description}</td>
-                                <td className={"table-h-table-r"}>{forecast.humidity}</td>
-                                <td className={"table-h-table-r"}>{forecast.windSpeed}</td>
-                                <td className={"table-h-table-r"}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
-                                <td className={"table-h-table-r"}>{forecast.minTemp}</td>
-                                <td className={"table-h-table-r"}>{forecast.maxTemp}</td>
-                                <td className={"table-h-table-r"}>{forecast.coordinates.latitude}</td>
-                                <td className={"table-h-table-r"}> {forecast.coordinates.longitude}</td>
+                        <div>
+                            <Table responsive variant={"dark"} striped bordered>
+                                <span className={"table-title"}>Today:</span>
+                                <tr>
+                                    <td className={"bold"}>City</td>
+                                    <td className={"bold"}>Description</td>
+                                    <td className={"bold"}>Humidity</td>
+                                    <td className={"bold"}>Windspeed</td>
+                                    <td className={"bold"}>Looks like</td>
+                                    <td className={"bold"}>Min. temp.</td>
+                                    <td className={"bold"}>Max. temp.</td>
+                                    <td className={"bold"}>Latitude</td>
+                                    <td className={"bold"}>Longitude</td>
+                                </tr>
+                                <tr className={""}>
+                                    <td className={""}>{forecast.cityName}</td>
+                                    <td className={""}>{forecast.description}</td>
+                                    <td className={""}>{forecast.humidity}</td>
+                                    <td className={""}>{forecast.windSpeed}</td>
+                                    <td className={""}><img src={`https://openweathermap.org/img/wn/${forecast.icon}@2x.png`} /></td>
+                                    <td className={""}>{forecast.minTemp}°</td>
+                                    <td className={""}>{forecast.maxTemp}°</td>
+                                    <td className={""}>{forecast.coordinates.latitude}</td>
+                                    <td className={""}> {forecast.coordinates.longitude}</td>
+                                </tr>
+                            </Table>
+                            <Table responsive bordered variant={"dark"} striped>
+                                <span className={"table-title"}>Coming up:</span>
+                                <tr>
+                                    <td className={"bold"}>Date</td>
+                                    <td className={"bold"}>Min. temp.</td>
+                                    <td className={"bold"}>Max. temp.</td>
+                                    <td className={"bold"}>Description</td>
+                                </tr>
                                 {forecast.fiveDayForecast.map((miniForecast) => {
                                     return (
-                                        <tr className={"table-h-table-r"}>
-                                            <td className={"table-h-table-r"}>Date: {miniForecast.validDate}</td>
-                                            <td className={"table-h-table-r"}>Min temp:{miniForecast.minTemp}</td>
-                                            <td className={"table-h-table-r"}>Max temp:{miniForecast.maxTemp}</td>
-                                            <td className={"table-h-table-r"}>Description:{miniForecast.description}</td>
+                                        <tr className={""}>
+                                            <td className={""}>{miniForecast.validDate}</td>
+                                            <td className={""}>{miniForecast.minTemp}°</td>
+                                            <td className={""}>{miniForecast.maxTemp}°</td>
+                                            <td className={""}>{miniForecast.description}</td>
                                         </tr>
                                     )
                                 })}
-                            </tr>
-                        </table>
-
+                            </Table>
+                        </div>
                     )})}
             </div>
     </div>

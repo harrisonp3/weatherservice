@@ -8,15 +8,12 @@ const AppNavbar = () => {
 
     return (
         <Navbar color="dark" dark expand="md">
-            <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
+            <NavbarBrand tag={Link} to="/">Harrison's Weather App</NavbarBrand>
             <NavbarToggler onClick={() => { setIsOpen(!isOpen) }}/>
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="justify-content-end" style={{width: "100%"}} navbar>
                     <NavItem>
-                        <NavLink href="https://twitter.com">twitter.com</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink href="https://www.google.com">google.com</NavLink>
+                        <NavLink href="https://www.weatherbit.io/api/weather-forecast-16-day">Weatherbit Forecast API</NavLink>
                     </NavItem>
                 </Nav>
             </Collapse>

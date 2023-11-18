@@ -148,10 +148,10 @@ public class WeatherService {
                         "      ]\n" +
                         "    },\n" +
                         "    \"lat\": {\n" +
-                        "      \"type\": \"string\"\n" +
+                        "      \"type\": [\"number\",\"string\"]" +
                         "    },\n" +
                         "    \"lon\": {\n" +
-                        "      \"type\": \"string\"\n" +
+                        "      \"type\": [\"number\",\"string\"]" +
                         "    }\n" +
                         "  },\n" +
                         "  \"required\": [\n" +
