@@ -17,3 +17,6 @@ From the weatherservice directory, run
 #### Client
 From the weatherservice/app directory, run
 `npm test`
+
+### Using the app
+When app is up and running in your browser, you can enter either a city name (eg. "miami", "los angeles", "providence,ri") OR you can enter coordinate values in the "latitude" and "longitude" input fields. Once you've entered either a city name or coordinates, hit enter and wait for results
