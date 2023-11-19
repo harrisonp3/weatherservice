@@ -2,6 +2,7 @@ package com.liveintent.weather.weatherservice.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liveintent.weather.weatherservice.model.FullDayForecast;
+import com.liveintent.weather.weatherservice.service.CredentialService;
 import com.liveintent.weather.weatherservice.service.WeatherService;
 import java.util.Map;
 import java.util.Objects;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
     private final Logger log = LoggerFactory.getLogger(WeatherController.class);
     //@todo abstract this out so it's secure and not hard-coded here
-    private static final String apiKey = "361873f7ccfe4de08d96b649c583eb27";
+    //private static final String apiKey = "361873f7ccfe4de08d96b649c583eb27";
 
     @Autowired
-    private WeatherService service;
+    private WeatherService weatherService;
+    @Autowired
+    private CredentialService credService;
 
     /**
      * Main endpoint for frontend client code to hit, on success returns populated FullDayForecast model
@@ -35,6 +38,7 @@ public class WeatherController {
     @GetMapping("/forecast")
     public ResponseEntity<FullDayForecast> getFiveDayForecastByCityOrCoordinates(@RequestParam Map<String, String> multipleParams) {
         try {
+            String apiKey = credService.getWeatherbitApiCredential();
             String city = "";
             String lat = "";
             String lon = "";
@@ -58,8 +62,8 @@ public class WeatherController {
             // If "city" is an empty string, use coords instead and call fetchFiveDayForecastByCoords()
             // otherwise, pass "city" into fetchFiveDayForecastByCity()
             FullDayForecast fore = (!Objects.equals(city, "")) ?
-                    service.fetchFiveDayForecastByCity(city, apiKey, units) :
-                    service.fetchFiveDayForecastByCoords(lat, lon, apiKey, units);
+                    weatherService.fetchFiveDayForecastByCity(city, apiKey, units) :
+                    weatherService.fetchFiveDayForecastByCoords(lat, lon, apiKey, units);
             if (fore == null) {
                 // http status 204
                 return ResponseEntity.noContent().build();
