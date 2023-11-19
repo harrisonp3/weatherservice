@@ -19,9 +19,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
@@ -42,9 +40,6 @@ public class WeatherService {
     private static final String WIND_SPEED_KEY = "wind_spd";
     private static final int LOOKAHEAD_COUNT = 5;
     private static final String API_ENDPOINT_BASE = "https://api.weatherbit.io/v2.0/forecast/daily?";
-
-    @Autowired
-    private RestTemplate template = new RestTemplate();
 
     /**
      * Transformation logic lives here - taking the HttpResponse and the JSON it contains and using
